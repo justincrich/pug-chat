@@ -5,13 +5,16 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import home from './pages/home/home';
-
+import ConvoListView from './pages/convolist/ConvoListView';
+import ConversationView from './pages/conversation/page.js';
 class Routes extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path="/" component={home}/>
+        <Switch>
+          <Route exact path="/" component={ConvoListView}/>
+          <Route path="/convo/:id" component={ConversationView}/>
+        </Switch>
       </BrowserRouter>
     );
   }
