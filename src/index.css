@@ -13,3 +13,9 @@ body {
 .form-control:focus{
   border-color: #D9D9D9;
 }
+
+textarea, input, button { outline: none; }
+
+a, a:hover{
+  text-decoration: none;
+}

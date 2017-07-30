@@ -12,8 +12,8 @@ class Routes extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={ConvoListView}/>
-          <Route path="/convo/:id" component={ConversationView}/>
+          <Route name='home' exact path="/" component={ConvoListView}/>
+          <Route name='convo' path="/convo/:convoId/:senderId" component={ConversationView}/>
         </Switch>
       </BrowserRouter>
     );
