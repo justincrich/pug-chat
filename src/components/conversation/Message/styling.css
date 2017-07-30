@@ -1,0 +1,35 @@
+.imgBody{
+  overflow: hidden;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+
+.imgBody img{
+  height: 50px;
+}
+
+.msgBody{
+  width:300px;
+  min-height: 50px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 0px 10px;
+}
+
+.msgContainer, .selfMsgContainer{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.selfMsgContainer .msgBody{
+  order:1;
+}
+
+.selfMsgContainer .imgBody{
+  order:2;
+}

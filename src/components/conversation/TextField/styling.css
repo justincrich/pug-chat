@@ -1,0 +1,39 @@
+.messageTextFieldContainer{
+  position: absolute;
+  bottom:0;
+  height: 60px;
+  border-top: 1px solid #E6E6E6;
+  width:100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  background: #FFF;
+
+}
+
+.messageTextFieldContainer input{
+  width:75%;
+  height: 18px;
+  font-size: .875em;
+  line-height: 1.28em;
+  direction:ltr;
+  border:none;
+}
+.messageTextFieldContainer input::placeholder {
+  color:rgba(206, 206, 206, 1);
+}
+
+.messageTextFieldContainer input:active{
+
+}
+
+.messageTextFieldContainer a{
+  color: rgba(24, 133, 255, 1);
+  text-decoration: none;
+}
+
+.messageTextFieldContainer a:hover{
+  /*font-weight: bold;*/
+  color:rgba(24, 133, 255, .5);
+}
