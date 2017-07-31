@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 //styling
 import './styling.css';
 
@@ -19,6 +19,7 @@ class ListItem extends Component{
   }
 
 
+
   render(){
     return(
       <Link to={'/convo/' + this.props.convo.id+'/'+this.props.convo.users[0].id}>
@@ -27,7 +28,7 @@ class ListItem extends Component{
               <img
                 src={this.props.convo.img}/>
             </div>
-            <div className="msgContainer">
+            <div className="msgLiContainer">
               <div className="authorMessage">
                 <div className='authorText'>
                   {this.props.convo.author}

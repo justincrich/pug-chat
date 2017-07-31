@@ -20,13 +20,13 @@ height: 50px;
   cursor:pointer;
 }
 
-.msgContainer{
+.msgLiContainer{
   margin-left: 15px;
   display: flex;
   align-items: flex-start;
 }
 
-.msgContainer .authorText{
+.msgLiContainer .authorText{
   color: rgba(0, 0, 0, 1);
   font-size: 0.9375em;
   line-height: 1.4em;
@@ -36,7 +36,7 @@ height: 50px;
   text-overflow: ellipsis;
 }
 
-.msgContainer .messageText{
+.msgLiContainer .messageText{
   color:rgba(153, 153, 153, 1);
   font-size: .8125em;
   font-weight: 400;

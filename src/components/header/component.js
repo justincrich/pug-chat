@@ -4,7 +4,7 @@ import {
   FormGroup,
   FormControl
 } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom'
 //styling
 import './styling.css';
 
@@ -62,10 +62,10 @@ class Header extends Component{
 
         return (
           <div className="convoNav">
-            <a className="backNav" href="#">
+            <Link className="backNav" to={"/"}>
               <i className="fa fa-chevron-left backIcon" aria-hidden="true"></i>
               <div className="backText">Home</div>
-            </a>
+            </Link>
             <div className="peopleNav">
               <div className="peopleImg">
                 <img

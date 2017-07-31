@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import Message from './Message/component.js';
 import TextField from './TextField/component.js';
 import './styling.css';
@@ -25,7 +26,7 @@ let messages = [
     img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
     text:"OK!",
     date:"11:10 AM",
-    id:1,
+    id:3,
     self:false
   },
 ];
@@ -40,18 +41,31 @@ class Conversation extends Component{
           img={message.img}
           text={message.text}
           date={message.date}
-          senderId={message.id}
           self={message.self}
+          key={message.id}
         />
       );
     });
   }
+
+  componentDidMount(){
+    // msgs = this.messages(messages);
+    // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
+    let objDiv = document.getElementById("convo");
+    console.log(objDiv);
+    objDiv.scrollTop = objDiv.scrollHeight;
+
+  }
+
   render(){
     let msgs = this.messages(messages);
     return(
 
       <div className='conversationContainer'>
-        {msgs}
+        <div id='convo' className='convoBody'>
+          {msgs}
+
+        </div>
         <TextField/>
       </div>
     )
