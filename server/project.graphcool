@@ -1,0 +1,40 @@
+# project: cj64bcbxh8vda0153u98etj4i
+# version: 12
+
+type Conversation implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  messages: [Message!]! @relation(name: "ConversationOnMessage")
+  updatedAt: DateTime!
+  users: [User!]! @relation(name: "UserOnConversation")
+}
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type Message implements Node {
+  conversation: Conversation @relation(name: "ConversationOnMessage")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  text: String!
+  updatedAt: DateTime!
+  user: User @relation(name: "MessageOnUser")
+}
+
+type User implements Node {
+  conversations: [Conversation!]! @relation(name: "UserOnConversation")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  imageUrl: String!
+  messages: [Message!]! @relation(name: "MessageOnUser")
+  name: String!
+  updatedAt: DateTime!
+}

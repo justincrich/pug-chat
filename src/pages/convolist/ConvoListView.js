@@ -28,7 +28,13 @@ class ConvoListView extends Component{
 
     if (this.props.data.error) {
       console.log(this.props.data.error)
-      return (<div>An unexpected error occured</div>)
+      return (
+        <div>
+          <div>
+            An unexpected error occured
+          </div>
+        </div>
+      )
     }
 
     if(!this.props.data.loading){
