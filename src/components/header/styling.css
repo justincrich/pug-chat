@@ -3,6 +3,7 @@
 .navbar{
   height: 80px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   background:#101010;
@@ -65,4 +66,9 @@
 
 .convoNav .peopleNav img{
   height: 50px;
+}
+
+.menuInterface{
+  margin-left:16px;
+  cursor:pointer;
 }

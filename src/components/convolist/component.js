@@ -70,7 +70,6 @@ class ConvoList extends Component{
   }
   //process conversations for diplay
   listConvos(data){
-    console.log('asdfads',data,new Date());
     return data.map((convo,index)=>{
       return (
         <ListItem

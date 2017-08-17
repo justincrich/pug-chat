@@ -28,21 +28,17 @@ class App extends Component {
     this._updateUI.bind(this);
   }
 
-  _showLogin = () => {
-    this.props.router.push('/login')
-  }
 
-  _showSignup = () => {
-    this.props.router.push('/signup')
-  }
 
   _isLoggedIn = () => {
     return this.props.data.user
   }
 
+
+
   renderLoggedIn(){
     return (
-      <ConvoListViewWithData logOut = {this._logout} userID={this.props.data.user.id}/>
+      <ConvoListViewWithData userID={this.props.data.user.id}/>
     )
   }
 
