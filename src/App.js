@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+/*Dependencies*/
+import React, {Component} from 'react';
 import {
   BrowserRouter,
   Route,
@@ -8,20 +9,31 @@ import {
 import { graphql, gql } from 'react-apollo';
 import { withRouter } from 'react-router';
 
-/*PAGE REFS*/
+/*Pages*/
 import ConvoListViewWithData from './pages/convolist/ConvoListView.js';
 import ConversationView from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
 
+/*Styling*/
+
+
 class App extends Component {
   static propTypes = {
-    router: React.PropTypes.object.isRequired,
+    // router: React.PropTypes.object.isRequired,
     data: React.PropTypes.object.isRequired,
+  }
+  constructor(props){
+    super(props);
+    this._updateUI.bind(this);
   }
 
   _showLogin = () => {
     this.props.router.push('/login')
+  }
+
+  _showSignup = () => {
+    this.props.router.push('/signup')
   }
 
   _isLoggedIn = () => {
@@ -30,13 +42,17 @@ class App extends Component {
 
   renderLoggedIn(){
     return (
-      <ConvoListViewWithData logOut = {this._logout} />
+      <ConvoListViewWithData logOut = {this._logout} userID={this.props.data.user.id}/>
     )
+  }
+
+  _updateUI(){
+    this.forceUpdate();
   }
 
   renderLoggedOut(){
     return (
-      <LoginView/>
+      <LoginView updatePage={this._updateUI}/>
     );
   }
 
@@ -46,7 +62,7 @@ class App extends Component {
       //DISPLAY LOADING STATE
       return (<div>Loading</div>)
     }
-    if(this._isLoggedIn()){
+    if(this.props.data.user){
       return this.renderLoggedIn();
     }else{
       return this.renderLoggedOut();

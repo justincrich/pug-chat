@@ -1,9 +1,12 @@
+/*Dependencies*/
 import React, {Component} from 'react';
+import { graphql, gql, compose } from 'react-apollo'
+//import gql from 'graphql-tag'
+import { withRouter } from 'react-router'
+
+/*Components*/
 import Header from '../../components/header/component.js';
 import ConvoList from '../../components/convolist/component.js';
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
-import { withRouter } from 'react-router'
 
 //styling
 import './home.css';
@@ -12,73 +15,99 @@ const id = 'cj5k8rs789xd601342etbtitk';
 
 class ConvoListView extends Component{
   static propTypes = {
-    data: React.PropTypes.shape({
-      loading: React.PropTypes.bool,
-      error: React.PropTypes.object,
-      User: React.PropTypes.object
-    }).isRequired,
-    router: React.PropTypes.object.isRequired,
+    data: React.PropTypes.object
+    // router: React.PropTypes.object.isRequired,
+  }
+  constructor(props){
+    super(props);
+    this.state={
+      conversations:[]
+    }
+    this.refreshConvos.bind(this);
+  }
+
+  refreshConvos(){
+
+  }
+
+  componentWillMount(){
+     this.props.getConvos.refetch({variables:{"userID":this.props.userID}}).then(
+       resp =>{
+         this.setState({
+           conversations:resp.data.allConversations
+         });
+       }
+     );
   }
 
   render(){
+    return(
 
-    if (this.props.data.loading) {
-      return (<div>Loading</div>)
-    }
+      <div className="body">
+        <Header status='search' />
+        <ConvoList conversations={this.state.conversations}/>
 
-    if (this.props.data.error) {
-      console.log(this.props.data.error)
-      return (
-        <div>
-          <div>
-            An unexpected error occured
-          </div>
-        </div>
-      )
-    }
-
-    if(!this.props.data.loading){
-      console.log(this.props.data);
-      const user = {
-        name: this.props.data.User.name,
-        image: this.props.data.User.imageUrl,
-      };
-      return(
-        <div className="body">
-          <Header status='search' user={user}/>
-          <ConvoList conversations={this.props.data.User.conversations}/>
-        </div>
-      )
-    }
+      </div>
+    )
   }
 }
 
-const ConvoQuery = gql`query ConvoQuery($id:ID!, $last:Int!){
-  User(id:$id){
-    name
-    id
-    imageUrl
-    conversations{
+const UserQuery = gql`
+  query {
+    user {
       id
-      users(filter:{id_not:$id}){
+      name
+    }
+  }
+`
+
+const getConvos = gql`
+  query ($userID:ID!){
+    allConversations{
+      id
+      users(filter:{
+        id_not:$userID
+      }){
         id
         name
         imageUrl
       }
-      messages(last:$last filter:{user:{id_not:$id}}){
+      messages(last:1){
         text
+        createdAt
+        id
       }
     }
-    }
-}`;
+  }
+`
 
-const ConvoListViewWithData = graphql(ConvoQuery,{
-  options:(ownProps)=>({
-    variables:{
-      id:"cj5k8rs789xd601342etbtitk",
-      last:1
-    },
-  })
-})(withRouter(ConvoListView))
+// const userQuery = gql`
+//   query {
+//     user {
+//       name
+//       id
+//       imageUrl
+      // conversations{
+      //   id
+      //   users{
+      //     id
+      //     name
+      //     imageUrl
+      //   }
+      //   messages(last:1){
+      //     text
+      //     createdAt
+      //     id
+      //   }
+      // }
+//     }
+//   }
+// `;
 
-export default ConvoListViewWithData;
+
+// export default graphql(QuerySpeaker, {
+//   options: (props) => ({ variables: { url: props.match.params.speakerUrl } })
+// })( SpeakerPage );
+
+export default graphql(getConvos,{name:'getConvos'})
+  (withRouter(ConvoListView));

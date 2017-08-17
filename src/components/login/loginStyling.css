@@ -1,0 +1,38 @@
+.loginBody{
+  position: absolute;
+  top:35%;
+  width:300px;
+
+}
+
+  .loginCardHeader{
+    margin-bottom: 15px;
+  }
+
+  .loginCardContentBody{
+
+  }
+
+    .inputContainer{
+      margin-bottom: 10px;
+    }
+
+      .input-group-addon{
+        background:#FFF;
+        border-right: 0;
+      }
+
+      input.form-control{
+        border-left: 0;
+
+      }
+
+  .loginCardFooter{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+  }
+    .loginCardFooter button:last-of-type{
+      margin-left: 10px;
+    }

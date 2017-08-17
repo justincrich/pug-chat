@@ -1,7 +1,17 @@
+/*Dependencies*/
 import React, {Component} from 'react';
 
+/*Components*/
 
-class Home extends Component{
+/*Styling*/
+
+class Template extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+  }
   render(){
     return(
       <div>
@@ -12,4 +22,4 @@ class Home extends Component{
 }
 
 
-export default Home;
+export default Template;

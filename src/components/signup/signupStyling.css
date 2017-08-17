@@ -1,0 +1,38 @@
+.signupBody{
+  position: absolute;
+  top:35%;
+  width:300px;
+
+}
+
+  .signupCardHeader{
+    margin-bottom: 15px;
+  }
+
+  .signupCardContentBody{
+
+  }
+
+    .inputContainer{
+      margin-bottom: 10px;
+    }
+
+      .input-group-addon{
+        background:#FFF;
+        border-right: 0;
+      }
+
+      input.form-control{
+        border-left: 0;
+
+      }
+
+  .signupCardFooter{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+  }
+    .signupCardFooter button:last-of-type{
+      margin-left: 10px;
+    }

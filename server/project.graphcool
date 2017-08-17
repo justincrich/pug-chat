@@ -1,5 +1,5 @@
 # project: cj64bcbxh8vda0153u98etj4i
-# version: 12
+# version: 18
 
 type Conversation implements Node {
   createdAt: DateTime!
@@ -37,4 +37,6 @@ type User implements Node {
   messages: [Message!]! @relation(name: "MessageOnUser")
   name: String!
   updatedAt: DateTime!
+  email: String @isUnique
+  password: String
 }

@@ -1,52 +1,111 @@
+/*Dependencies*/
 import React, {Component} from 'react';
+import { graphql, gql } from 'react-apollo';
+import { withRouter } from 'react-router';
+
+/*Components*/
 import Header from '../../components/header/component.js';
+import Login from '../../components/login/loginComponent.js';
+import Signup from '../../components/signup/signupComponent.js';
+
+/*Styling*/
 import './styling.css';
 
 class LoginView extends Component{
-  _logout = () => {
-    // remove token from local storage and reload page to reset apollo client
-    window.localStorage.removeItem('graphcoolToken')
-    window.location.reload()
+  constructor(props) {
+    super(props);
+    this.state = {
+      login:true,
+      email:'',
+      password:'',
+    };
+  }
+  static propTypes = {
+    // router: React.PropTypes.object.isRequired,
+    data: React.PropTypes.object.isRequired,
+  }
+  signupUI = () =>{
+    return (
+      <div className='pageBody'>
+        <Signup signup={this._signup} showLogin={this._toggleSignupLogin}/>
+      </div>
+    )
+  }
+  _toggleSignupLogin = () => {
+    this.setState({
+      login:!this.state.login
+    });
   }
 
-  _showSignup = () => {
-    this.props.router.push('/signup')
+  loginUI = () =>{
+    return (
+      <div className='pageBody'>
+        <Login login={this._login} showSignup={this._toggleSignupLogin}/>
+      </div>
+    )
   }
+
+  _login = (email,password) =>{
+    //do some validation
+
+    //sign in user
+    this.props.signinUser({variables:{email,password}})
+      .then(resp => {
+        window.localStorage.setItem('graphcoolToken', resp.data.signinUser.token);
+        //do something to change the screen
+        console.log("auth!!!", resp.data.signinUser.token);
+        this.props.updatePage();
+
+      }).catch(e => {
+        console.error(e)
+      });
+  }
+
+  _signup = (email,password) =>{
+    //do some validation
+  }
+
   render(){
     return(
       <div>
         <Header/>
-        <div className='pageBody'>
-          <div className="loginBody card">
-            <div className="card-block">
-              <div className="loginCardHeader">
-                <h5>Login</h5>
-              </div>
-              <div className="loginCardContentBody">
-                <div className='inputContainer input-group'>
-                  <span className="input-group-addon" id="sizing-addon1">@</span>
-                  <input type="text" className="form-control" placeholder="Username"
-                    aria-describedby="sizing-addon1"/>
-                </div>
-                <div className='inputContainer input-group'>
-                  <span className="input-group-addon" id="sizing-addon1">
-                    <i className="fa fa-unlock-alt" aria-hidden="true"></i>
-                  </span>
-                  <input type="password" className="form-control" placeholder="Password"
-                    aria-describedby="sizing-addon1"/>
-                </div>
-              </div>
-              <div className='loginCardFooter'>
-                <button type="button" className="btn btn-secondary">Signup</button>
-                <button type="button" className="btn btn-primary">Login</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {this.state.login?
+          this.loginUI()
+          :
+          this.signupUI()
+        }
       </div>
     )
   }
 }
 
+const createUser = gql`
+  mutation ($email: String!, $password: String!, $name: String!, $emailSubscription: Boolean!) {
+    createUser(authProvider: {email: {email: $email, password: $password}}, name: $name, emailSubscription: $emailSubscription) {
+      id
+    }
+  }
+`
 
-export default LoginView;
+const signinUser = gql`
+  mutation ($email: String!, $password: String!) {
+    signinUser(email: {email: $email, password: $password}) {
+      token
+    }
+  }
+`
+
+const userQuery = gql`
+  query {
+    user {
+      id
+    }
+  }
+`
+
+export default graphql(createUser, {name: 'createUser'})(
+  graphql(userQuery, { options: { fetchPolicy: 'network-only' }})(
+    graphql(signinUser, {name: 'signinUser'})(
+      withRouter(LoginView))
+    )
+);

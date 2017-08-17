@@ -1,4 +1,6 @@
+/*Dependencies*/
 import React, {Component} from 'react';
+/*Styling*/
 import "./styling.css";
 
 class TextField extends Component{

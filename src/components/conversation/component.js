@@ -1,7 +1,10 @@
+/*Dependencies*/
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+/*Components*/
 import Message from './Message/component.js';
 import TextField from './TextField/component.js';
+/*Styling*/
 import './styling.css';
 
 let messages = [
@@ -52,7 +55,6 @@ class Conversation extends Component{
     // msgs = this.messages(messages);
     // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
     let objDiv = document.getElementById("convo");
-    console.log(objDiv);
     objDiv.scrollTop = objDiv.scrollHeight;
 
   }

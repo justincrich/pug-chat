@@ -48,8 +48,6 @@ ReactDOM.render((
       <Switch>
         <Route path='/' component={App} />
         <Route name='home' exact path="/" component={ConvoListViewWithData}/>
-        <Route name='login' exact path="login" component={LoginView}/>
-        <Route name='signup' exact path="signup" component={SignupView}/>
         <Route name='convo' path="/convo/:convoId/:senderId" component={ConversationView}/>
       </Switch>
     </BrowserRouter>

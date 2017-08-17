@@ -1,3 +1,4 @@
+/*Dependencies*/
 import React, {Component} from 'react';
 import {
   Navbar,
@@ -5,6 +6,7 @@ import {
   FormControl
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+
 //styling
 import './styling.css';
 

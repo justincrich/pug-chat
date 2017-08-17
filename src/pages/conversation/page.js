@@ -1,7 +1,9 @@
+/*Dependencies*/
 import React, {Component} from 'react';
+/*Components*/
 import Conversation from '../../components/conversation/component.js';
 import Header from '../../components/header/component.js';
-
+/*Data*/
 const convo = {
   date:"10:46 PM",
   id:1111,
