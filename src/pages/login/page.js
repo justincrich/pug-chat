@@ -15,7 +15,7 @@ class LoginView extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      login:false,
+      login:true,
       email:'',
       password:'',
     };
@@ -65,6 +65,7 @@ class LoginView extends Component{
   _signup = (name,email,password,img) =>{
     this.props.createUser(
       {
+
         variables:{
           name,
           email,
