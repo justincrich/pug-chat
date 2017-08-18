@@ -48,13 +48,8 @@ class Header extends Component{
     this.state={
     }
     this.type.bind(this);
-    this._logout.bind(this);
   }
-  _logout = () => {
-    // remove token from local storage and reload page to reset apollo client
-    window.localStorage.removeItem('graphcoolToken')
-    window.location.reload()
-  }
+
   type(test){
     switch(test){
       case 'search':{
@@ -65,7 +60,7 @@ class Header extends Component{
             <input className="form-control mr-sm-2" type="text"/>
           </div>
           <div className="menuInterface">
-            <a className="headerLogOut" href="#" onClick={this._logout}>
+            <a className="headerLogOut" href="#" onClick={this.props.logout}>
               <i className="fa fa-2x fa-sign-out" aria-hidden="true"></i>
             </a>
           </div>

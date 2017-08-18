@@ -35,12 +35,20 @@ class ListItem extends Component{
                   {this.props.users[0].name}
                 </div>
                 <div className='messageText'>
-                  {this.props.message.text}
+                  {this.props.message?
+                    this.props.message.text
+                    :
+                    <div></div>
+                  }
                 </div>
               </div>
             </div>
             <div className='date'>
-              {this.props.message.createdAt}
+              {this.props.message?
+                  this.props.message.createdAt
+                :
+                  <div></div>
+              }
             </div>
         </li>
       </Link>

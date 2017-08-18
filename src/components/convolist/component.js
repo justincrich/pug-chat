@@ -82,8 +82,9 @@ class ConvoList extends Component{
   }
 
   //update list of convos whenever we get a new list in props
-  componentWillReceiveProps(nextProps){
-    let convoArr = nextProps.conversations;
+  componentWillMount(){
+    let convoArr = this.props.conversations;
+    console.log('convoArr',convoArr)
     if(convoArr.length>0){
       this.setState({
         list: this.listConvos(convoArr)
@@ -94,7 +95,11 @@ class ConvoList extends Component{
   render(){
     return(
       <ul className="convoUL">
-        {this.state.list}
+        {this.state.list.length>0?
+          this.state.list
+        :
+          <div></div>
+        }
       </ul>
     )
   }

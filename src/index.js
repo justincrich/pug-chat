@@ -20,7 +20,12 @@ import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
 
 //setup authentication
-const networkInterface = createNetworkInterface({uri:'https://api.graph.cool/simple/v1/cj64bcbxh8vda0153u98etj4i'})
+const networkInterface = createNetworkInterface({
+  uri:'https://api.graph.cool/simple/v1/cj64bcbxh8vda0153u98etj4i',
+  // opts:{
+  //   credentials: 'include'
+  // }
+})
 
 networkInterface.use([{
   applyMiddleware (req, next) {

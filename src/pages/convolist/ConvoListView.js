@@ -11,11 +11,12 @@ import ConvoList from '../../components/convolist/component.js';
 //styling
 import './home.css';
 
-const id = 'cj5k8rs789xd601342etbtitk';
 
 class ConvoListView extends Component{
   static propTypes = {
-    data: React.PropTypes.object
+    data: React.PropTypes.shape({
+      user: React.PropTypes.object,
+    }).isRequired
     // router: React.PropTypes.object.isRequired,
   }
   constructor(props){
@@ -23,59 +24,39 @@ class ConvoListView extends Component{
     this.state={
       conversations:[]
     }
-    this.refreshConvos.bind(this);
   }
 
-  refreshConvos(){
-
-  }
-
-  componentWillMount(){
-     this.props.getConvos.refetch({variables:{"userID":this.props.userID}}).then(
-       resp =>{
-         this.setState({
-           conversations:resp.data.allConversations
-         });
-       }
-     );
-  }
 
   render(){
-    return(
-
-      <div className="body">
-        <Header status='search' />
-        <ConvoList conversations={this.state.conversations}/>
-
-      </div>
-    )
+    console.log(this.props.userID, this.props);
+    if(this.props.data.loading){
+      return(<div></div>)
+    }else{
+      console.log('loaded',this.props.data.user.conversations);
+      return (<ConvoList conversations={this.props.data.user.conversations}/>)
+    }
   }
 }
 
-const UserQuery = gql`
-  query {
-    user {
-      id
-      name
-    }
-  }
-`
-
 const getConvos = gql`
   query ($userID:ID!){
-    allConversations{
+    user{
       id
-      users(filter:{
-        id_not:$userID
-      }){
+      name
+      conversations{
         id
-        name
-        imageUrl
-      }
-      messages(last:1){
-        text
-        createdAt
-        id
+        users(filter:{
+          id_not:$userID
+        }){
+          id
+          name
+          imageUrl
+        }
+        messages(last:1){
+          text
+          createdAt
+          id
+        }
       }
     }
   }
@@ -109,5 +90,10 @@ const getConvos = gql`
 //   options: (props) => ({ variables: { url: props.match.params.speakerUrl } })
 // })( SpeakerPage );
 
-export default graphql(getConvos,{name:'getConvos'})
+export default graphql(getConvos,{
+  options:(props)=>({
+    variables:{
+      userID:props.userID
+    }
+  })})
   (withRouter(ConvoListView));
