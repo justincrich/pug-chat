@@ -12,6 +12,14 @@
   .signupCardContentBody{
 
   }
+    .inputContainer{
+      display: flex;
+      flex-direction: row;
+    }
+    .authWarningText{
+      color:red;
+      display: none;
+    }
 
     .inputContainer{
       margin-bottom: 10px;
@@ -27,6 +35,60 @@
 
       }
 
+      .inputContainer.fileUpload{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+        .profileImgBox{
+          width:50%;
+          margin-bottom: 10px;
+          padding: 10px 10px;
+          display:none;
+          justify-content: center;
+          align-items: center;
+        }
+        .profileImgBox .imgProfileRemove{
+          display:none;
+          position: absolute;
+          top:5px;
+          right:70px;
+          color:black;
+        }
+
+          .inputContainer.fileUpload .uploadedProfileImageReg{
+            opacity:0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:100px;
+            height: 100px;
+            overflow: hidden;
+
+          }
+
+            .inputContainer.fileUpload .uploadedProfileImageReg img{
+              width:100%;
+            }
+
+        .inputContainer.fileUpload .uploadButton{
+          width:100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+        }
+
+        .inputContainer.fileUpload .uploadButton i{
+          margin-right: 5px;
+        }
+
+
   .signupCardFooter{
     width: 100%;
     display: flex;
@@ -36,3 +98,33 @@
     .signupCardFooter button:last-of-type{
       margin-left: 10px;
     }
+
+
+/* --------------------------
+  Keyframes
+--------------------------- */
+@keyframes grow {
+	0% {
+		transform: scale(.3);
+    opacity: 0;
+	}
+	50% {
+		transform: scale(1.15);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+/*------------
+Anamations
+-----------------*/
+.inputContainer.fileUpload .uploadedProfileImageReg{
+    animation-name: grow;
+    animation-duration: .5s;
+}
+
+.inputContainer.fileUpload .uploadedProfileImageReg.growIn{
+  opacity:1;
+}

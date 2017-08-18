@@ -16,6 +16,8 @@ class Login extends Component{
   login(){
     let eml = this.state.email;
     let pswrd = this.state.password;
+
+
     this.props.login(eml,pswrd);
   }
   render(){
@@ -26,6 +28,7 @@ class Login extends Component{
             <h5 className="loginContainerHeader">Login</h5>
           </div>
           <div className="loginCardContentBody">
+            <div hidden id="generalSignUpAuthWarning" className="authWarningText"></div>
             <div className='inputContainer input-group'>
               <span className="input-group-addon" id="sizing-addon1">@</span>
               <input type="text" className="form-control" placeholder="Username"
