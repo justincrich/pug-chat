@@ -52,8 +52,8 @@ ReactDOM.render((
     <BrowserRouter>
       <Switch>
         <Route path='/' component={App} />
-        <Route name='home' exact path="/" component={ConvoListViewWithData}/>
-        <Route name='convo' path="/convo/:convoId/:senderId" component={ConversationView}/>
+        <Route name='home' exact path="/" component={App}/>
+        <Route name='convo' path="/convo/:convoId/:senderId" component={App}/>
       </Switch>
     </BrowserRouter>
   </ApolloProvider>

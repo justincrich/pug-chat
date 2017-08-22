@@ -18,6 +18,7 @@ class LoginView extends Component{
       login:true,
       email:'',
       password:'',
+      error:null
     };
     this._signup.bind(this);
     this.uploadImg.bind(this);
@@ -27,8 +28,11 @@ class LoginView extends Component{
   }
   signupUI = () =>{
     return (
-      <div className='pageBody'>
-        <Signup signup={this._signup} showLogin={this._toggleSignupLogin}/>
+      <div>
+        <Header/>
+        <div className='pageBody'>
+          <Signup signup={this._signup} showLogin={this._toggleSignupLogin} error={this.state.error}/>
+        </div>
       </div>
     )
   }
@@ -41,14 +45,20 @@ class LoginView extends Component{
   loginUI = () =>{
     return (
       <div className='pageBody'>
-        <Login login={this._login} showSignup={this._toggleSignupLogin}/>
+        <Login
+          login={this._login}
+          showSignup={this._toggleSignupLogin}
+          error={this.state.error}
+        />
       </div>
     )
   }
 
   _login = (email,password) =>{
     //do some validation
-
+    this.setState({
+      error:null
+    });
     //sign in user
     this.props.signinUser({variables:{email,password}})
       .then(resp => {
@@ -58,11 +68,18 @@ class LoginView extends Component{
         window.location.reload()
 
       }).catch(e => {
+        e.type = 'login';
+        this.setState({
+          error:e
+        });
         console.error(e)
       });
   }
 
   _signup = (name,email,password,img) =>{
+    this.setState({
+      error:null
+    });
     this.props.createUser(
       {
 
@@ -88,9 +105,17 @@ class LoginView extends Component{
           window.location.reload()
         }
       }).catch(e=>{
+        e.type = 'signup';
+        this.setState({
+          error:e
+        });
         console.error(e);
       })
     }).catch(e=>{
+      e.type = 'signup';
+      this.setState({
+        error:e
+      });
       console.error(e);
     })
   }

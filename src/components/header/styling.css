@@ -1,13 +1,16 @@
 
-
 .navbar{
   height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   background:#101010;
   color: #FFF;
+  width: 100%;
+}
+
+.convo.navbar{
+  justify-content: center;
 }
 
 .navbar a{
@@ -19,6 +22,44 @@
   text-decoration: none;
 }
 
+/*Listview Formatting*/
+.menuSelectionHolderBox{
+  display: flex;
+  width: 100%;
+
+}
+@media screen and (min-width: 768px) {
+    .menuSelectionHolderBox {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .menuSelectionHolderBox {
+        width: 30%;
+    }
+}
+
+  .menuSelectionHolderBox .newConvo{
+    cursor: pointer;
+  }
+
+    .navbarSearchBtn{
+      cursor:pointer;
+      margin-left: auto;
+    }
+
+
+    /*Search Field*/
+    .navBarSearchContainer{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .navBarSearchContainer i{
+      margin-left:16px;
+    }
+
 /*Nav Search Formatting*/
 .navSearch i {
   background: #FFFFFF;
@@ -29,18 +70,35 @@
   background: #FFFFFF;
   border-left:0px;
   border-radius: 40px;
+  min-width: 280px;
   max-width: 400px;
+}
+.navBarSearchContainer i{
+  cursor: pointer;
+}
+
+/* Settings Container */
+.navBarSettingsContainer{
+  position: relative;
+  right: 0;
 }
 
 /*Convo Nav Formatting*/
+.convoSectionHolderBox{
+  width: 100%;
+  display: none;
+}
+
 .convoNav{
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
+
 .convoNav .backNav{
-  position:absolute;
-  display: flex;
+  position:relative;
+  display: none;
   flex-direction: row;
   align-items: center;
   left:0;
@@ -51,11 +109,14 @@
   padding-left: 5px;
 }
 
+
 .convoNav .peopleNav{
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   margin-top: 5px;
+  width: 100%;
 }
 .convoNav .peopleNav .peopleImg{
   border-radius: 100%;
@@ -68,7 +129,27 @@
   height: 50px;
 }
 
-.menuInterface{
-  margin-left:16px;
-  cursor:pointer;
+@media screen and (min-width: 768px) {
+    .convoSectionHolderBox {
+        display: flex;
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .convoSectionHolderBox {
+        width: 70%;
+    }
+}
+
+
+/*NEW CONVO*/
+.newConvoHeader .title{
+
+}
+
+.newConvoHeader .closeNewConvoHeader{
+  color: #FFFFFF;
+  position: absolute;
+  right:15px;
 }

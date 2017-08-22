@@ -1,7 +1,9 @@
 /*Dependencies*/
 import React, {Component} from 'react';
+import './styling.css';
 /*Components*/
 import Conversation from '../../components/conversation/component.js';
+import TextField from '../../components/conversation/TextField/component.js';
 import Header from '../../components/header/component.js';
 /*Data*/
 const convo = {
@@ -20,6 +22,27 @@ const convo = {
       user:{
         name:"Justin Rich",
         id:2
+      }
+    },
+    {
+      text:"You're my love",
+      user:{
+        name:"Athena Bringhurst",
+        id:3
+      }
+    },
+    {
+      text:"You're my love",
+      user:{
+        name:"Athena Bringhurst",
+        id:3
+      }
+    },
+    {
+      text:"You're my love",
+      user:{
+        name:"Athena Bringhurst",
+        id:3
       }
     },
     {
@@ -54,9 +77,10 @@ class ConversationView extends Component{
   render(){
     //console.log(this.props.match.params.convoId, this.props.match.params.senderId)
     return(
-      <div>
+      <div className='convoPageContainer'>
         <Header status='convo'/>
         <Conversation/>
+        <TextField/>
       </div>
     )
   }

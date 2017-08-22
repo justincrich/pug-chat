@@ -12,6 +12,9 @@
   .loginCardContentBody{
 
   }
+    .primaryAuthWarningText{
+      color:red;
+    }
 
     .inputContainer{
       margin-bottom: 10px;

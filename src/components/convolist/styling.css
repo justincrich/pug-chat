@@ -1,10 +1,23 @@
 
 .convoUL{
   margin-top: 80px;
-  max-width: 400px;
+  width: 100%;
   border-right: 1px solid #E6E6E6;
   border-left: 1px solid #E6E6E6;
-  height: 100vh;
+  height: calc(100vh - 80px);
   overflow: scroll;
 
+}
+@media screen and (min-width: 768px) {
+    .convoUL {
+        width: 40%;
+        position: absolute;
+        left:0;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .convoUL {
+        width: 30%;
+    }
 }

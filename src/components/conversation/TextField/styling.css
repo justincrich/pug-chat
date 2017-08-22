@@ -1,5 +1,5 @@
 .messageTextFieldContainer{
-  position: absolute;
+  position: relative;
   bottom:0;
   height: 60px;
   border-top: 1px solid #E6E6E6;

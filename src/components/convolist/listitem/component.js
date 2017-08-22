@@ -23,7 +23,7 @@ class ListItem extends Component{
 
   render(){
     return(
-      <Link to={'/convo/' + this.props.key+'/'}>
+      <Link to={'/convo/' + this.props.convo.id+'/'}>
         <li className='convoListItem'>
             <div className='userImg'>
               <img

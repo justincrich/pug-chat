@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 /*Components*/
 import Message from './Message/component.js';
-import TextField from './TextField/component.js';
+
 /*Styling*/
 import './styling.css';
 
@@ -11,7 +11,7 @@ let messages = [
   {
     author:"Athena Bringhurst",
     img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"I Love You! Please bring home bacon.",
+    text:"Love You! Please bring home bacon.",
     date:"10:46 AM",
     id:1,
     self:false
@@ -30,6 +30,46 @@ let messages = [
     text:"OK!",
     date:"11:10 AM",
     id:3,
+    self:false
+  },
+  {
+    author:"Athena Bringhurst",
+    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
+    text:"OK!",
+    date:"11:10 AM",
+    id:4,
+    self:false
+  },
+  {
+    author:"Athena Bringhurst",
+    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
+    text:"OK!",
+    date:"11:10 AM",
+    id:5,
+    self:false
+  },
+  {
+    author:"Athena Bringhurst",
+    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
+    text:"OK!",
+    date:"11:10 AM",
+    id:6,
+    self:false
+  },
+  {
+    author:"Athena Bringhurst",
+    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
+    text:"OK!",
+    date:"11:10 AM",
+    id:7,
+    self:false
+  },
+  {
+    author:"Athena Bringhurst",
+    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
+    text:"OK!",
+    date:"11:10 AM",
+    id:8,
     self:false
   },
 ];
@@ -60,15 +100,12 @@ class Conversation extends Component{
   }
 
   render(){
-    let msgs = this.messages(messages);
     return(
 
       <div className='conversationContainer'>
         <div id='convo' className='convoBody'>
-          {msgs}
-
+          {this.messages(messages)}
         </div>
-        <TextField/>
       </div>
     )
   }

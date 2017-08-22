@@ -18,6 +18,31 @@
   font-size: large;
 }
 
+.appContainer{
+  display: flex;
+  flex-direction: row;
+  z-index: 0;
+}
+
+.emptyConvo{
+  position: absolute;
+  right:0;
+  height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+    .emptyConvo {
+        width: 60%;
+
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .emptyConvo {
+        width: 70%;
+    }
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

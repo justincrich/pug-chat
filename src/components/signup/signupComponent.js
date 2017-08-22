@@ -86,7 +86,7 @@ class Signup extends Component{
   exeSignup(){
     //reset warnings
 
-    let valid = loginValidate(this.state.name, this.state.email,this.state.password);
+    let valid = loginValidate(this.state.email,this.state.password,this.state.name);
 
     //handle name warnings
     let nameWarning = document.getElementById("registerNameWarning");

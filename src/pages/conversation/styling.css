@@ -1,0 +1,15 @@
+@media screen and (min-width: 768px) {
+    .convoPageContainer {
+        width: 60%;
+        z-index: 0;
+        position: absolute;
+        right: 0;
+        height:calc(100vh - 140px);;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .convoPageContainer {
+        width: 70%;
+    }
+}

@@ -9,7 +9,7 @@ import Header from '../../components/header/component.js';
 import ConvoList from '../../components/convolist/component.js';
 
 //styling
-import './home.css';
+import './styling.css';
 
 
 class ConvoListView extends Component{
@@ -22,7 +22,8 @@ class ConvoListView extends Component{
   constructor(props){
     super(props);
     this.state={
-      conversations:[]
+      conversations:[],
+      headerType:'convoList'
     }
   }
 
@@ -33,7 +34,11 @@ class ConvoListView extends Component{
       return(<div></div>)
     }else{
       console.log('loaded',this.props.data.user.conversations);
-      return (<ConvoList conversations={this.props.data.user.conversations}/>)
+      return (
+        <div className='convoListContainerHolder'>
+          <ConvoList conversations={this.props.data.user.conversations}/>
+        </div>
+      )
     }
   }
 }

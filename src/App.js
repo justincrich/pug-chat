@@ -15,9 +15,9 @@ import ConvoListViewWithData from './pages/convolist/ConvoListView.js';
 import ConversationView from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
-
+import NewConvo from './pages/newconvo/NewConvoPage.js'
 /*Styling*/
-
+import './App.css';
 
 class App extends Component {
   static propTypes = {
@@ -26,7 +26,12 @@ class App extends Component {
   }
   constructor(props){
     super(props);
+    this.state={
+      windowWidth:350
+    }
     this._logout.bind(this);
+    this.getUI.bind(this);
+    this.updateWindowWidth=this.updateWindowWidth.bind(this);
   }
 
   _logout = () =>{
@@ -38,29 +43,65 @@ class App extends Component {
     return this.props.data.user
   }
 
+  updateWindowWidth(){
+    console.log(window.innerWidth);
+    this.setState({
+      windowWidth:window.innerWidth
+    });
+  }
 
 
+  //the logged in state
   renderLoggedIn(){
-
-      return (
-        <div>
-          <Header status='search' logout={this._logout}/>
-          <ConvoListViewWithData userID={this.props.data.user.id}/>
+    if(this.state.windowWidth> 0 && this.state.windowWidth<=767){
+      //Mobile view
+      return(
+        <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
+      )
+    }else if(this.state.windowWidth>768){
+      //Tablet view
+      return(
+        <div className='appContainer'>
+          <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
+          <ConversationView/>
         </div>
+      )
+    }else{
+      return(
+        <div>tablet</div>
+      )
+    }
 
-    )
+
+  }
+
+  getUI(width){
+    console.log(width);
+    //
   }
 
 
   renderLoggedOut(){
     return (
       <div>
-        <Header/>
         <LoginView />
       </div>
     );
   }
 
+
+  /*--------- REACT METHODS ------------*/
+
+  componentDidMount(){
+    this.setState({
+      windowWidth:window.innerWidth
+    });
+    window.addEventListener('resize',this.updateWindowWidth);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('resize',this.updateWindowWidth);
+  }
 
   render() {
     if(this.props.data.loading){
@@ -68,7 +109,16 @@ class App extends Component {
       return (<div>Loading</div>)
     }
     if(this.props.data.user){
-      return this.renderLoggedIn();
+      console.log(this.props);
+      return(
+        <div>
+          <Header
+            logout={this._logout}
+          />
+          {this.renderLoggedIn()}
+        </div>
+
+      );
     }else{
       return this.renderLoggedOut();
     }
