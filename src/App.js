@@ -27,7 +27,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      windowWidth:350
+      windowWidth:350,
+      conversationSelected:''
     }
     this._logout.bind(this);
     this.getUI.bind(this);
@@ -44,7 +45,6 @@ class App extends Component {
   }
 
   updateWindowWidth(){
-    console.log(window.innerWidth);
     this.setState({
       windowWidth:window.innerWidth
     });
@@ -53,6 +53,7 @@ class App extends Component {
 
   //the logged in state
   renderLoggedIn(){
+
     if(this.state.windowWidth> 0 && this.state.windowWidth<=767){
       //Mobile view
       return(
@@ -63,7 +64,7 @@ class App extends Component {
       return(
         <div className='appContainer'>
           <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
-          <ConversationView/>
+          <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
         </div>
       )
     }else{
@@ -98,18 +99,21 @@ class App extends Component {
     });
     window.addEventListener('resize',this.updateWindowWidth);
   }
+  componentWillReceiveProps(){
+
+  }
 
   componentWillUnmount(){
     window.removeEventListener('resize',this.updateWindowWidth);
   }
 
   render() {
+
     if(this.props.data.loading){
       //DISPLAY LOADING STATE
       return (<div>Loading</div>)
     }
     if(this.props.data.user){
-      console.log(this.props);
       return(
         <div>
           <Header

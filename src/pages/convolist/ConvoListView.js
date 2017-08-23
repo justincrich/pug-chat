@@ -29,14 +29,12 @@ class ConvoListView extends Component{
 
 
   render(){
-    console.log(this.props.userID, this.props);
     if(this.props.data.loading){
       return(<div></div>)
     }else{
-      console.log('loaded',this.props.data.user.conversations);
       return (
         <div className='convoListContainerHolder'>
-          <ConvoList conversations={this.props.data.user.conversations}/>
+          <ConvoList conversations={this.props.data.user.conversations} userID={this.props.userID}/>
         </div>
       )
     }

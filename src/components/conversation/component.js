@@ -7,84 +7,21 @@ import Message from './Message/component.js';
 /*Styling*/
 import './styling.css';
 
-let messages = [
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"Love You! Please bring home bacon.",
-    date:"10:46 AM",
-    id:1,
-    self:false
-  },
-  {
-    author:"Justin Rich",
-    img:"https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/14718805_10102886022829089_1236249216051883866_n.jpg?oh=81eabce7bb9fa19753259cbb2f7540c4&oe=5A04DD64",
-    text:"I want to marry you!",
-    date:"11:00 AM",
-    id:2,
-    self:true
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:3,
-    self:false
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:4,
-    self:false
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:5,
-    self:false
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:6,
-    self:false
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:7,
-    self:false
-  },
-  {
-    author:"Athena Bringhurst",
-    img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD",
-    text:"OK!",
-    date:"11:10 AM",
-    id:8,
-    self:false
-  },
-];
+
 
 
 class Conversation extends Component{
   messages(msg){
+
     return msg.map(message=>{
+      let self = this.props.userID === message.user.id ? true : false;
       return (
         <Message
-          author={message.author}
-          img={message.img}
+          author={message.user.name}
+          img={message.user.imageUrl}
           text={message.text}
-          date={message.date}
-          self={message.self}
+          date={message.createdAt}
+          self={self}
           key={message.id}
         />
       );
@@ -96,6 +33,7 @@ class Conversation extends Component{
     // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
     let objDiv = document.getElementById("convo");
     objDiv.scrollTop = objDiv.scrollHeight;
+    console.log(this.props);
 
   }
 
@@ -104,7 +42,7 @@ class Conversation extends Component{
 
       <div className='conversationContainer'>
         <div id='convo' className='convoBody'>
-          {this.messages(messages)}
+          {this.messages(this.props.conversation.messages)}
         </div>
       </div>
     )

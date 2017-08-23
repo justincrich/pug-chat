@@ -1,6 +1,8 @@
 /*Dependencies*/
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import Conversation from '../../conversation/component.js';
+
 //styling
 import './styling.css';
 
@@ -23,7 +25,7 @@ class ListItem extends Component{
 
   render(){
     return(
-      <Link to={'/convo/' + this.props.convo.id+'/'}>
+      <Link to={'/'+this.props.userID+'/convo/' + this.props.convo.id+'/'}>
         <li className='convoListItem'>
             <div className='userImg'>
               <img

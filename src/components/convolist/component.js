@@ -1,6 +1,5 @@
 /*Dependencies*/
 import React, {Component} from 'react';
-
 /*Components*/
 import ListItem from './listitem/component.js';
 /*Styling*/
@@ -25,6 +24,7 @@ class ConvoList extends Component{
           message={convo.messages[0]}
           users={convo.users}
           convo={convo}
+          userID={this.props.userID}
           />
       );
     });
