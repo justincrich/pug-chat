@@ -25,6 +25,7 @@ class ConvoList extends Component{
           users={convo.users}
           convo={convo}
           userID={this.props.userID}
+          deleteConvo={this.props.deleteConvo}
           />
       );
     });
@@ -32,22 +33,19 @@ class ConvoList extends Component{
 
   //update list of convos whenever we get a new list in props
   componentWillMount(){
-    let convoArr = this.props.conversations;
-    if(convoArr.length>0){
-      this.setState({
-        list: this.listConvos(convoArr)
-      })
-    }
+    // console.log('props in comp',this.props);
+    // let convoArr = this.props.conversations;
+    // if(convoArr.length>0){
+    //   this.setState({
+    //     list: this.listConvos(convoArr)
+    //   })
+    // }
   }
 
   render(){
     return(
       <ul className="convoUL">
-        {this.state.list.length>0?
-          this.state.list
-        :
-          <div></div>
-        }
+        {this.listConvos(this.props.conversations)}
       </ul>
     )
   }

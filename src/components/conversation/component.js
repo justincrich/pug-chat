@@ -33,7 +33,7 @@ class Conversation extends Component{
     // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
     let objDiv = document.getElementById("convo");
     objDiv.scrollTop = objDiv.scrollHeight;
-    console.log(this.props);
+
 
   }
 

@@ -2,7 +2,8 @@
 import React, {Component} from 'react';
 import { graphql, gql, compose } from 'react-apollo'
 //import gql from 'graphql-tag'
-import { withRouter } from 'react-router'
+import { withRouter, Redirect } from 'react-router'
+import {convoCleaner} from '../../components/tools/cleaner.js';
 
 /*Components*/
 import Header from '../../components/header/component.js';
@@ -22,19 +23,38 @@ class ConvoListView extends Component{
   constructor(props){
     super(props);
     this.state={
-      conversations:[],
       headerType:'convoList'
     }
+    this.deleteConvo = this.deleteConvo.bind(this);
+  }
+
+  deleteConvo(convo){
+    convoCleaner(
+      convo,
+      this.props.getAllConvoMsgs,
+      this.props.deleteMessage,
+      this.props.deleteConversation).then(() => {
+      console.log('BACK IN DELETE')
+      this.props.data.refetch();
+      this.props.history.push('/');
+    });
   }
 
 
+
   render(){
+    console.log(this.props);
     if(this.props.data.loading){
       return(<div></div>)
     }else{
+
       return (
         <div className='convoListContainerHolder'>
-          <ConvoList conversations={this.props.data.user.conversations} userID={this.props.userID}/>
+          <ConvoList
+            conversations={this.props.data.user.conversations}
+            userID={this.props.userID}
+            deleteConvo={this.deleteConvo}
+          />
         </div>
       )
     }
@@ -65,38 +85,45 @@ const getConvos = gql`
   }
 `
 
-// const userQuery = gql`
-//   query {
-//     user {
-//       name
-//       id
-//       imageUrl
-      // conversations{
-      //   id
-      //   users{
-      //     id
-      //     name
-      //     imageUrl
-      //   }
-      //   messages(last:1){
-      //     text
-      //     createdAt
-      //     id
-      //   }
-      // }
-//     }
-//   }
-// `;
+const getAllConvoMsgs = gql`
+  query ($conversation:ID!){
+    Conversation(id:$conversation){
+      id
+      messages{
+        id
+      }
+    }
+  }
+`
+
+const deleteMessage = gql`
+  mutation deleteMessage($message:ID!){
+    deleteMessage(id:$message){
+      id
+    }
+  }
+`;
+
+const deleteConversation= gql`
+  mutation deleteConversation($conversation:ID!){
+    deleteConversation(id:$conversation){
+      id
+    }
+  }
+`;
 
 
-// export default graphql(QuerySpeaker, {
-//   options: (props) => ({ variables: { url: props.match.params.speakerUrl } })
-// })( SpeakerPage );
 
-export default graphql(getConvos,{
+export default graphql(deleteConversation,{name:'deleteConversation'})
+(graphql(deleteMessage,{name:'deleteMessage'})
+(graphql(getAllConvoMsgs,{
+  name:'getAllConvoMsgs',
+  options: { variables: { conversation: '' } },
+})
+  (graphql(getConvos,{
   options:(props)=>({
     variables:{
       userID:props.userID
     }
   })})
-  (withRouter(ConvoListView));
+  (withRouter(ConvoListView)))));

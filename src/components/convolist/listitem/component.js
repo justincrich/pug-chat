@@ -52,6 +52,9 @@ class ListItem extends Component{
                   <div></div>
               }
             </div>
+            <i className="deleteConvoInList fa fa-times"
+              aria-hidden="true"
+              onClick={()=>this.props.deleteConvo(this.props.convo)}></i>
         </li>
       </Link>
     )
