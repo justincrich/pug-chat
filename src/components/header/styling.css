@@ -7,7 +7,16 @@
   background:#101010;
   color: #FFF;
   width: 100%;
+  padding-top:0px !important;
+  padding-bottom: 0px !important;
 
+}
+
+
+@media screen and (min-width: 768px) {
+    .navbar .divider {
+
+    }
 }
 
 .convo.navbar{
@@ -27,6 +36,8 @@
 .menuSelectionHolderBox{
   display: flex;
   width: 100%;
+  align-items: center;
+  justify-content: center;
 
 }
 @media screen and (min-width: 768px) {
@@ -43,11 +54,12 @@
 
   .menuSelectionHolderBox .newConvo{
     cursor: pointer;
+    margin-right: 10px;
   }
 
     .navbarSearchBtn{
       cursor:pointer;
-      margin-left: auto;
+      margin-left: 10px;
     }
 
 
@@ -61,21 +73,36 @@
       margin-left:16px;
     }
 
-/*Nav Search Formatting*/
-.navSearch i {
+/*Nav Input Formatting*/
+/*.navSearch{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}*/
+.navSearch i.inputLabel {
   background: #FFFFFF;
   border-right:0px;
-  border-radius: 40px;
+  border-radius: 40px 0px 0px 40px !important;
+  height: 38px;
 }
 .navSearch input {
   background: #FFFFFF;
   border-left:0px;
   border-radius: 40px;
-  min-width: 280px;
-  max-width: 400px;
+  /*min-width: px;*/
+  max-width: 300px;
+  margin-right: 10px;
+
 }
 .navBarSearchContainer i{
   cursor: pointer;
+}
+
+.navSearch i.close{
+  color:#FFF;
+  background: transparent;
+  opacity: 1;
+  margin-right:10px;
 }
 
 /* Settings Container */

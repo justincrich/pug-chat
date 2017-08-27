@@ -25,7 +25,9 @@ class ListItem extends Component{
 
   render(){
     return(
-      <Link to={'/'+this.props.userID+'/convo/' + this.props.convo.id+'/'}>
+      <Link to={'/'+this.props.userID+'/convo/' + this.props.convo.id+'/'}
+            onClick={()=>this.props.selectConvo()}
+      >
         <li className='convoListItem'>
             <div className='userImg'>
               <img
@@ -52,9 +54,9 @@ class ListItem extends Component{
                   <div></div>
               }
             </div>
-            <i className="deleteConvoInList fa fa-times"
+            {/* <i className="deleteConvoInList fa fa-times"
               aria-hidden="true"
-              onClick={()=>this.props.deleteConvo(this.props.convo)}></i>
+              onClick={()=>this.props.deleteConvo(this.props.convo)}></i> */}
         </li>
       </Link>
     )

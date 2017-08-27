@@ -26,6 +26,7 @@ class ConvoList extends Component{
           convo={convo}
           userID={this.props.userID}
           deleteConvo={this.props.deleteConvo}
+          selectConvo={this.props.selectConvo}
           />
       );
     });

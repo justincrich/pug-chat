@@ -28,11 +28,16 @@ class App extends Component {
     super(props);
     this.state={
       windowWidth:350,
-      conversationSelected:''
+      conversationSelected:'',
+      userSearch:[],
+      convoInView:false
     }
     this._logout.bind(this);
     this.getUI.bind(this);
     this.updateWindowWidth=this.updateWindowWidth.bind(this);
+    this.findUser = this.findUser.bind(this);
+    this.newConvo = this.newConvo.bind(this);
+    this.selectConvo = this.selectConvo.bind(this);
   }
 
   _logout = () =>{
@@ -50,10 +55,28 @@ class App extends Component {
     });
   }
 
+  findUser(term){
+    this.props.findUser({variables:{
+      emailterm:term,
+      nameterm:term
+    }})
+  }
+
+  newConvo(){
+    this.setState({
+      convoInView:true
+    });
+    console.log('newconvo!!!')
+  }
+
+  selectConvo(){
+    console.log('select convo')
+  }
+
 
   //the logged in state
   renderLoggedIn(){
-
+    console.log(' convo'+this.state.convoInView)
     if(this.state.windowWidth> 0 && this.state.windowWidth<=767){
       //Mobile view
       return(
@@ -63,7 +86,11 @@ class App extends Component {
       //Tablet view
       return(
         <div className='appContainer'>
-          <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
+          <ConvoListViewWithData
+            userID={this.props.data.user.id}
+            logout={this._logout}
+            selectConvo={this.selectConvo}
+          />
           <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
         </div>
       )
@@ -118,6 +145,7 @@ class App extends Component {
         <div>
           <Header
             logout={this._logout}
+            newConvo={this.newConvo}
           />
           {this.renderLoggedIn()}
         </div>
@@ -139,13 +167,53 @@ const userQuery = gql`
       imageUrl
     }
   }
+`;
+
+const findUser = gql`
+  query findUser($emailterm:String!,$nameterm:String!){
+    allUsers(
+      filter:{
+        email_contains:$emailterm,
+        name_contains:$nameterm
+      })
+      {
+        name
+        id
+        email
+      }
+  }
+`;
+
+const createConvo = gql`
+  mutation createConvo($user1:String!,$user2:String!){
+    createConversation(usersIds:[$user1,$user1]){
+      id
+      users{
+        name
+        email
+        imageUrl
+      }
+    }
+  }
 `
 
 
 
 
 export default withApollo(
-  graphql(userQuery,{options:{fetchPolicy:'network-only'}})
-  (withRouter(App)
+  graphql(createConvo,{
+    name:'createConvo'
+  }
   )
-);
+  (graphql(findUser,{
+    name:'findUser',
+    options:{
+      variables:{
+        emailterm:'',
+        nameterm:''
+      }
+    }
+  })
+  (graphql(userQuery,{options:{fetchPolicy:'network-only'}})
+  (withRouter(App)))
+));

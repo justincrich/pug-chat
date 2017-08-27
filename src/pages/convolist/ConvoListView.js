@@ -28,6 +28,13 @@ class ConvoListView extends Component{
     this.deleteConvo = this.deleteConvo.bind(this);
   }
 
+  findUser(term){
+    this.props.findUser({variables:{
+      emailterm:term,
+      nameterm:term
+    }})
+  }
+
   deleteConvo(convo){
     convoCleaner(
       convo,
@@ -43,7 +50,6 @@ class ConvoListView extends Component{
 
 
   render(){
-    console.log(this.props);
     if(this.props.data.loading){
       return(<div></div>)
     }else{

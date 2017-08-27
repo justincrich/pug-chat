@@ -15,11 +15,15 @@ class Header extends Component{
   constructor(props){
     super(props);
     this.state={
-      searching:false,
-      settings:false
+      searching:'icon',
+      searchingField:'none',
+      settings:'icon',
+      newMsg:'icon',
+      newMsgField:'none'
     }
     this.type.bind(this);
     this.searchType.bind(this);
+
   }
   searchType(e){
     //enter key pressed
@@ -30,18 +34,14 @@ class Header extends Component{
       });
     }
   }
+
   type(test){
     switch(test){
       case 'convoList':{
         return (
           <nav className="ulNav navbar navbar-dark bg-faded fixed-top">
             <div className='menuSelectionHolderBox'>
-              <i className="fa-2x fa fa-pencil-square-o newConvo"
-                aria-hidden="true"
-                onClick={()=>{
-                  this.props.newConvo();
-                }}
-                ></i>
+
               <div className="settingsSelectionHolderBox">
                 <div className="navbarSearchBtn" onClick={()=>this.setState({searching:true})}>
                   <i className="fa fa-2x fa-search" aria-hidden="true"></i>
@@ -55,18 +55,6 @@ class Header extends Component{
             </div>
           </nav>
       );
-      }
-      break;
-      case 'newConvo':{
-        return(
-          <div>
-            <div>
-              <div>To:</div>
-              <input className='newConvoHeaderInput'/>
-            </div>
-            <i className="fa fa-lg fa-times closeNewConvoHeader" aria-hidden="true"></i>
-          </div>
-        )
       }
       break;
       case 'convo':{
@@ -90,16 +78,16 @@ class Header extends Component{
 
       <nav className="navbar navbar-dark bg-faded fixed-top">
         <div className='menuSelectionHolderBox'>
-          <i className="fa-2x fa fa-pencil-square-o newConvo"
-            aria-hidden="true"
-            onClick={()=>{
-              this.props.newConvo();
-            }}
-            ></i>
-            <div className="navbarSearchBtn" onClick={()=>this.setState({searching:true})}>
-              <i className="fa fa-2x fa-search" aria-hidden="true"></i>
+            <div className='navSearch input-group'>
+              <i className="inputLabel fa fa-search input-group-addon" aria-hidden="true"></i>
+              <input id="navSearch" className="form-control mr-sm-2" type="text"/>
             </div>
+            <i className="fa-2x fa fa-pencil-square-o newConvo"
+              aria-hidden="true"
+              onClick={this.props.newConvo}
+              ></i>
         </div>
+        <div className='divider'></div>
         <div className='convoSectionHolderBox'>
           <div className="convoNav">
             <Link className="backNav" to={"/"}>
