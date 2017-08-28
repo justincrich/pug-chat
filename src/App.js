@@ -76,12 +76,21 @@ class App extends Component {
 
   //the logged in state
   renderLoggedIn(){
-    console.log(' convo'+this.state.convoInView)
     if(this.state.windowWidth> 0 && this.state.windowWidth<=767){
       //Mobile view
-      return(
-        <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
-      )
+
+      //select convo or list view
+      if(this.props.location.pathname === '/'){
+        return(
+          <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
+        )
+      }else{
+        console.log('convo id',this.props)
+        return(
+          <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+        )
+      }
+
     }else if(this.state.windowWidth>768){
       //Tablet view
       return(

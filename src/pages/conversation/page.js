@@ -127,11 +127,11 @@ const getConversations = gql`
 // export default ConversationView;
 export default graphql(getConversations,{
   options:(gqlProps)=>{
-  return (
-    {variables:{
-        convoID:gqlProps.match.params.convoId
+    return (
+      {variables:{
+          convoID:gqlProps.match.params.convoId
+        }
       }
-    }
-  )
+    )
 
 }})(withRouter(ConversationView));

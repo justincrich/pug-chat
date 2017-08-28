@@ -26,7 +26,6 @@ class ListItem extends Component{
   render(){
     return(
       <Link to={'/'+this.props.userID+'/convo/' + this.props.convo.id+'/'}
-            onClick={()=>this.props.selectConvo()}
       >
         <li className='convoListItem'>
             <div className='userImg'>
