@@ -13,11 +13,6 @@
 }
 
 
-@media screen and (min-width: 768px) {
-    .navbar .divider {
-
-    }
-}
 
 .convo.navbar{
   justify-content: center;
@@ -114,7 +109,10 @@
 /*Convo Nav Formatting*/
 .convoSectionHolderBox{
   width: 100%;
-  display: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
 }
 
 .convoNav{
@@ -124,16 +122,17 @@
 }
 
 
-.convoNav .backNav{
-  position:relative;
-  display: none;
+.backNav{
+  display: flex;
+  position: absolute;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   left:0;
   padding: 10px 10px;
 }
 
-.convoNav .backNav .backText{
+.backNav .backText{
   padding-left: 5px;
 }
 

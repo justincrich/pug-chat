@@ -30,7 +30,8 @@ class App extends Component {
       windowWidth:350,
       conversationSelected:'',
       userSearch:[],
-      convoInView:false
+      convoInView:false,
+
     }
     this._logout.bind(this);
     this.getUI.bind(this);
@@ -85,10 +86,11 @@ class App extends Component {
           <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
         )
       }else{
-        console.log('convo id',this.props)
+
         return(
           <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
         )
+        //show back nav
       }
 
     }else if(this.state.windowWidth>768){
@@ -98,7 +100,7 @@ class App extends Component {
           <ConvoListViewWithData
             userID={this.props.data.user.id}
             logout={this._logout}
-            selectConvo={this.selectConvo}
+
           />
           <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
         </div>
@@ -135,9 +137,6 @@ class App extends Component {
     });
     window.addEventListener('resize',this.updateWindowWidth);
   }
-  componentWillReceiveProps(){
-
-  }
 
   componentWillUnmount(){
     window.removeEventListener('resize',this.updateWindowWidth);
@@ -148,21 +147,26 @@ class App extends Component {
     if(this.props.data.loading){
       //DISPLAY LOADING STATE
       return (<div>Loading</div>)
-    }
-    if(this.props.data.user){
-      return(
-        <div>
-          <Header
-            logout={this._logout}
-            newConvo={this.newConvo}
-          />
-          {this.renderLoggedIn()}
-        </div>
-
-      );
     }else{
-      return this.renderLoggedOut();
+      if(this.props.data.user){
+        return(
+          <div>
+            <Header
+              logout={this._logout}
+              newConvo={this.newConvo}
+              path={this.props.location.pathname}
+              user={this.props.data.user}
+              convo={this.props.location.pathname.split('/')[3]}
+            />
+            {this.renderLoggedIn()}
+          </div>
+
+        );
+      }else{
+        return this.renderLoggedOut();
+      }
     }
+
   }
 }
 
@@ -174,6 +178,14 @@ const userQuery = gql`
       id
       name
       imageUrl
+      conversations{
+        id
+        users{
+          name
+          id
+          imageUrl
+        }
+      }
     }
   }
 `;
@@ -206,6 +218,18 @@ const createConvo = gql`
   }
 `
 
+// const getConvos = gql`
+// query getConvos{
+//   allConversations{
+//     id
+//     users{
+//       name
+//       id
+//     }
+//   }
+// }
+// `
+
 
 
 
@@ -223,6 +247,7 @@ export default withApollo(
       }
     }
   })
+
   (graphql(userQuery,{options:{fetchPolicy:'network-only'}})
   (withRouter(App)))
 ));
