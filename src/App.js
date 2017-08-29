@@ -10,7 +10,6 @@ import { withApollo, graphql, gql } from 'react-apollo';
 import { withRouter } from 'react-router';
 
 /*Pages*/
-import Header from './components/header/component.js';
 import ConvoListViewWithData from './pages/convolist/ConvoListView.js';
 import ConversationView from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
@@ -151,13 +150,6 @@ class App extends Component {
       if(this.props.data.user){
         return(
           <div>
-            <Header
-              logout={this._logout}
-              newConvo={this.newConvo}
-              path={this.props.location.pathname}
-              user={this.props.data.user}
-              convo={this.props.location.pathname.split('/')[3]}
-            />
             {this.renderLoggedIn()}
           </div>
 
@@ -178,14 +170,6 @@ const userQuery = gql`
       id
       name
       imageUrl
-      conversations{
-        id
-        users{
-          name
-          id
-          imageUrl
-        }
-      }
     }
   }
 `;

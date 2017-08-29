@@ -7,25 +7,15 @@
   background:#101010;
   color: #FFF;
   width: 100%;
-  padding-top:0px !important;
-  padding-bottom: 0px !important;
+  padding-top:5px !important;
+  padding-bottom: 5px !important;
 
 }
 
 
 
-.convo.navbar{
-  justify-content: center;
-}
 
-.navbar a{
-  color: #FFF;
-}
 
-.navbar a:hover{
-  color: #FFF;
-  text-decoration: none;
-}
 
 /*Listview Formatting*/
 .menuSelectionHolderBox{
@@ -107,67 +97,7 @@
 }
 
 /*Convo Nav Formatting*/
-.convoSectionHolderBox{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 
-}
-
-.convoNav{
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-
-.backNav{
-  display: flex;
-  position: absolute;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  left:0;
-  padding: 10px 10px;
-}
-
-.backNav .backText{
-  padding-left: 5px;
-}
-
-
-.convoNav .peopleNav{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 5px;
-  width: 100%;
-}
-.convoNav .peopleNav .peopleImg{
-  border-radius: 100%;
-  overflow: hidden;
-  height: 45px;
-  width: 45px;
-}
-
-.convoNav .peopleNav img{
-  height: 50px;
-}
-
-@media screen and (min-width: 768px) {
-    .convoSectionHolderBox {
-        display: flex;
-        width: 60%;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .convoSectionHolderBox {
-        width: 70%;
-    }
-}
 
 
 /*NEW CONVO*/

@@ -6,7 +6,7 @@ import { withRouter, Redirect } from 'react-router'
 import {convoCleaner} from '../../components/tools/cleaner.js';
 
 /*Components*/
-import Header from '../../components/header/component.js';
+import ListHead from '../../components/header/ListHead/ListHead.js';
 import ConvoList from '../../components/convolist/component.js';
 
 //styling
@@ -56,6 +56,7 @@ class ConvoListView extends Component{
 
       return (
         <div className='convoListContainerHolder'>
+          <ListHead/>
           <ConvoList
             conversations={this.props.data.user.conversations}
             userID={this.props.userID}

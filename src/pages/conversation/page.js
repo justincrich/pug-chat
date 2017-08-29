@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 /*Components*/
 import Conversation from '../../components/conversation/component.js';
 import TextField from '../../components/conversation/TextField/component.js';
-import Header from '../../components/header/component.js';
+import ConvoHead from '../../components/header/ConvoHead/ConvoHead.js';
 /*Data*/
 // const convo = {
 //   date:"10:46 PM",
@@ -86,13 +86,18 @@ class ConversationView extends Component{
 
 
   render(){
-
+    console.log(this.props.data)
     if(this.props.data.loading){
         return(<div></div>)
       }else if(this.props.data.Conversation){
         return(
           <div className='convoPageContainer'>
-            <Header status='convo'/>
+            <ConvoHead users={
+              this.props.data.Conversation.users.filter(user=>{
+
+                return user.id != this.props.data.user.id;
+              })
+            }/>
             <Conversation userID = {this.props.match.params.userId} conversation = {this.props.data.Conversation}/>
             <TextField/>
           </div>)
@@ -120,6 +125,9 @@ const getConversations = gql`
           imageUrl
         }
       }
+    }
+    user{
+      id
     }
   }
 `

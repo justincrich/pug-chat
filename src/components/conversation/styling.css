@@ -1,5 +1,4 @@
 .conversationContainer{
-  margin-top: 80px;
   height:calc(100vh - 140px);
   background: rgba(237, 241, 241, 1);
   display: flex;
