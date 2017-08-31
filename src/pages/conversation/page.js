@@ -78,12 +78,15 @@ class ConversationView extends Component{
     super(props);
     this.state={
     }
+    this.createConvo = this.createConvo.bind(this);
   }
   // componentDidMount(){
   //   console.log('did mount',this.props);
   // }
 
-
+  createConvo(){
+    console.log('submit')
+  }
 
   render(){
     console.log(this.props.data)
@@ -99,7 +102,7 @@ class ConversationView extends Component{
               })
             }/>
             <Conversation userID = {this.props.match.params.userId} conversation = {this.props.data.Conversation}/>
-            <TextField/>
+            <TextField submit={this.createConvo}/>
           </div>)
       }
     }

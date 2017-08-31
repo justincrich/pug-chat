@@ -41,7 +41,6 @@ class ConvoListView extends Component{
       this.props.getAllConvoMsgs,
       this.props.deleteMessage,
       this.props.deleteConversation).then(() => {
-      console.log('BACK IN DELETE')
       this.props.data.refetch();
       this.props.history.push('/');
     });
@@ -56,7 +55,7 @@ class ConvoListView extends Component{
 
       return (
         <div className='convoListContainerHolder'>
-          <ListHead/>
+          <ListHead newConvo = {this.props.newConvo}/>
           <ConvoList
             conversations={this.props.data.user.conversations}
             userID={this.props.userID}

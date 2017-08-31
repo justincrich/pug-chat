@@ -29,15 +29,16 @@ class App extends Component {
       windowWidth:350,
       conversationSelected:'',
       userSearch:[],
-      convoInView:false,
+      newConvo:false
 
     }
     this._logout.bind(this);
     this.getUI.bind(this);
     this.updateWindowWidth=this.updateWindowWidth.bind(this);
     this.findUser = this.findUser.bind(this);
-    this.newConvo = this.newConvo.bind(this);
+    this.displayNewConvo = this.displayNewConvo.bind(this);
     this.selectConvo = this.selectConvo.bind(this);
+    this.setRightPannel = this.setRightPannel.bind(this);
   }
 
   _logout = () =>{
@@ -62,17 +63,39 @@ class App extends Component {
     }})
   }
 
-  newConvo(){
+  displayNewConvo(){
     this.setState({
-      convoInView:true
+      newConvo:true
     });
-    console.log('newconvo!!!')
   }
 
   selectConvo(){
     console.log('select convo')
   }
 
+  setRightPannel(){
+
+    return(
+      <div>
+        {/* {
+          this.state.newConvo &&
+          <Redirect to={`/${this.props.data.user.id}/newconvo`}/>
+        } */}
+        <Route name='conversation' path={"/newconvo"} component={NewConvo}/>
+        <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+      </div>
+    )
+    // if(this.state.newConvo){
+    //   return(
+    //     <Route name='conversation' path={"/:userId/newconvo"} component={ConversationView}/>
+    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+    //   )
+    // }else{
+    //   return(
+    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+    //   )
+    // }
+  }
 
   //the logged in state
   renderLoggedIn(){
@@ -82,12 +105,15 @@ class App extends Component {
       //select convo or list view
       if(this.props.location.pathname === '/'){
         return(
-          <ConvoListViewWithData userID={this.props.data.user.id} logout={this._logout}/>
+          <ConvoListViewWithData
+            userID={this.props.data.user.id}
+            logout={this._logout}
+            newConvo={this.displayNewConvo}
+          />
         )
       }else{
-
         return(
-          <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+          this.setRightPannel()
         )
         //show back nav
       }
@@ -99,9 +125,10 @@ class App extends Component {
           <ConvoListViewWithData
             userID={this.props.data.user.id}
             logout={this._logout}
+            newConvo={this.displayNewConvo}
 
           />
-          <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+          {this.setRightPannel()}
         </div>
       )
     }else{
@@ -172,7 +199,17 @@ const userQuery = gql`
       imageUrl
     }
   }
-`;
+`
+
+const searchUsers = gql`
+  query searchUsers($term:String){
+    allUsers(filter:{OR:[{email_contains:$term},{name_contains:$term}]}){
+      id
+      name
+      email
+    }
+  }
+`
 
 const findUser = gql`
   query findUser($emailterm:String!,$nameterm:String!){
