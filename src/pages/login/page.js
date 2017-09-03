@@ -4,7 +4,6 @@ import { graphql, gql } from 'react-apollo';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 /*Components*/
-import Header from '../../components/header/component.js';
 import Login from '../../components/login/loginComponent.js';
 import Signup from '../../components/signup/signupComponent.js';
 
@@ -29,7 +28,6 @@ class LoginView extends Component{
   signupUI = () =>{
     return (
       <div>
-        <Header/>
         <div className='pageBody'>
           <Signup signup={this._signup} showLogin={this._toggleSignupLogin} error={this.state.error}/>
         </div>
@@ -147,7 +145,6 @@ class LoginView extends Component{
   render(){
     return(
       <div>
-        <Header/>
         {this.state.login?
           this.loginUI()
           :
