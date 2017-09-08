@@ -1,0 +1,17 @@
+.contactTokenContainer{
+  border-radius: 25px;
+  padding:5px 15px;
+  font-size: .875em;
+  line-height: 1.28em;
+  background: rgba(237, 241, 241, 1);
+}
+
+
+.ContactToken_ERROR{
+  /*border: 1px solid red;*/
+  background:  #ffcccc;
+}
+
+.contactTokenContainer i{
+  padding-left: 10px;
+}

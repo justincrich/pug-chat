@@ -1,0 +1,31 @@
+.newConvoPage{
+  position: absolute;
+}
+
+.newConvoMessageTextField{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
+@media screen and (min-width: 768px) {
+    .newConvoPageContainer {
+        width: 60%;
+        z-index: 0;
+        position: absolute;
+        right: 0;
+        background: rgba(237, 241, 241, 1);
+    }
+    .newConvoPageBody{
+      height:calc(100vh - 80px);
+      width: 100%;
+      color:
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .newConvoPageContainer {
+        width: 70%;
+    }
+}

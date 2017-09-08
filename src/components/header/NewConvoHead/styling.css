@@ -1,0 +1,50 @@
+.convoNav{
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background:#101010;
+  color: #FFF;
+  width: 100%;
+  padding-top:0px !important;
+  padding-bottom: 0px !important;
+}
+.convoSectionHolderBox{
+  width: 100%!important;
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  padding: 0 10px;
+
+}
+
+.convoNav{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+
+.newConvoBackNav{
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  right:0;
+  padding: 10px 10px;
+  color:#FFF;
+}
+
+.newConvoHeaderText{
+  font-size: 1.2em;
+}
+
+.backNav:hover{
+  color: #FFF;
+}
+
+.backNav .backText{
+  padding-left: 5px;
+}

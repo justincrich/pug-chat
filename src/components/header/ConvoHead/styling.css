@@ -1,0 +1,64 @@
+.convoNav{
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background:#101010;
+  color: #FFF;
+  width: 100%;
+  padding-top:0px !important;
+  padding-bottom: 0px !important;
+}
+.convoSectionHolderBox{
+  width: 100%!important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.convoNav{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+
+.backNav{
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  left:0;
+  padding: 10px 10px;
+  color:#FFF;
+}
+
+.backNav:hover{
+  color: #FFF;
+}
+
+.backNav .backText{
+  padding-left: 5px;
+}
+
+
+.convoNav .peopleNav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5px;
+  width: 100%;
+}
+.convoNav .peopleNav .peopleImg{
+  border-radius: 100%;
+  overflow: hidden;
+  height: 45px;
+  width: 45px;
+}
+
+.convoNav .peopleNav img{
+  height: 50px;
+}

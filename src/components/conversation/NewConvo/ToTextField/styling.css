@@ -1,0 +1,48 @@
+.messageToTextFieldContainer{
+  position: relative;
+  bottom:0;
+  height: 60px;
+  border-bottom: 1px solid #E6E6E6;
+  width:100%;
+  display: flex;
+  /*justify-content: space-around;*/
+  padding: 13px;
+  align-items: center;
+  flex-direction: row;
+  background: #FFF;
+
+}
+.messageToTextFieldContainer .toTextFieldLabel{
+  color:rgba(0, 0, 0, .40);
+  font-size: .95em;
+
+}
+.toTextFieldContactToken{
+  margin-left: 6px;
+}
+.messageToTextFieldContainer input{
+  margin-left: 6px;
+  width:75%;
+  height: 18px;
+  font-size: .875em;
+  line-height: 1.28em;
+  direction:ltr;
+  border:none;
+}
+.messageToTextFieldContainer input::placeholder {
+  color:rgba(206, 206, 206, 1);
+}
+
+.messageToTextFieldContainer input:active{
+
+}
+
+.messageToTextFieldContainer a{
+  color: rgba(24, 133, 255, 1);
+  text-decoration: none;
+}
+
+.messageToTextFieldContainer a:hover{
+  /*font-weight: bold;*/
+  color:rgba(24, 133, 255, .5);
+}
