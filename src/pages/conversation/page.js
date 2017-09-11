@@ -7,67 +7,7 @@ import { withRouter } from 'react-router';
 import Conversation from '../../components/conversation/component.js';
 import TextField from '../../components/conversation/TextField/component.js';
 import ConvoHead from '../../components/header/ConvoHead/ConvoHead.js';
-/*Data*/
-// const convo = {
-//   date:"10:46 PM",
-//   id:1111,
-//   messages:[
-//     {
-//       text:"Helo",
-//       user:{
-//         name:"Athena Bringhurst",
-//         id:1
-//       }
-//     },
-//     {
-//       text:"I Love You",
-//       user:{
-//         name:"Justin Rich",
-//         id:2
-//       }
-//     },
-//     {
-//       text:"You're my love",
-//       user:{
-//         name:"Athena Bringhurst",
-//         id:3
-//       }
-//     },
-//     {
-//       text:"You're my love",
-//       user:{
-//         name:"Athena Bringhurst",
-//         id:3
-//       }
-//     },
-//     {
-//       text:"You're my love",
-//       user:{
-//         name:"Athena Bringhurst",
-//         id:3
-//       }
-//     },
-//     {
-//       text:"You're my love",
-//       user:{
-//         name:"Athena Bringhurst",
-//         id:3
-//       }
-//     }
-//   ],
-//   users:[
-//     {
-//       name:"Athena Bringhurst",
-//       id:1,
-//       img:"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-9/12036376_10206616766792024_2376180338732214314_n.jpg?oh=b7d147ec08172ed0bad19d08eddce7fe&oe=5A0230BD"
-//     },
-//     {
-//       name:"Justin Rich",
-//       id:2,
-//       img:"https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/14718805_10102886022829089_1236249216051883866_n.jpg?oh=81eabce7bb9fa19753259cbb2f7540c4&oe=5A04DD64"
-//     }
-//   ]
-// };
+import ToastNotification from '../../components/ToastNotification/ToastNotificationComponent.js';
 
 class ConversationView extends Component{
   static propTypes = {
@@ -77,12 +17,28 @@ class ConversationView extends Component{
   constructor(props){
     super(props);
     this.state={
+      notificationMessage:'',
+      notificationVisible:false
     }
+
+    this.showNotification = this.showNotification.bind(this);
     this.createConvo = this.createConvo.bind(this);
   }
   // componentDidMount(){
   //   console.log('did mount',this.props);
   // }
+
+  showNotification(message){
+    this.setState({
+      notificationMessage:message,
+      notificationVisible:true
+    });
+    setTimeout(()=>{
+      this.setState({
+        notificationVisible:false
+      })
+    },5000)
+  }
 
   createConvo(){
     console.log('submit')
@@ -103,7 +59,11 @@ class ConversationView extends Component{
             }/>
             <Conversation userID = {this.props.match.params.userId} conversation = {this.props.data.Conversation}/>
             <TextField submit={this.createConvo}/>
-          </div>)
+            {this.state.notificationVisible &&
+              <ToastNotification message={this.state.notificationMessage}/>
+            }
+          </div>
+        )
       }
     }
 

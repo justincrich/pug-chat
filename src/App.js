@@ -15,6 +15,9 @@ import ConversationView from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
 import NewConvo from './pages/newconvo/NewConvoPage.js'
+
+
+
 /*Styling*/
 import './App.css';
 
@@ -29,7 +32,7 @@ class App extends Component {
       windowWidth:350,
       conversationSelected:'',
       userSearch:[],
-      newConvo:false
+      newConvo:false,
 
     }
     this._logout.bind(this);
@@ -99,6 +102,7 @@ class App extends Component {
 
   //the logged in state
   renderLoggedIn(){
+
     if(this.state.windowWidth> 0 && this.state.windowWidth<=767){
       //Mobile view
 
@@ -154,6 +158,18 @@ class App extends Component {
     );
   }
 
+  showNotification(message){
+    this.setState({
+      notificationMessage:message,
+      notificationVisible:true
+    });
+    setTimeout(()=>{
+      this.setState({
+        notificationVisible:false
+      })
+    },5000)
+  }
+
 
   /*--------- REACT METHODS ------------*/
 
@@ -169,7 +185,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log(this.props.data.user)
     if(this.props.data.loading){
       //DISPLAY LOADING STATE
       return (<div>Loading</div>)

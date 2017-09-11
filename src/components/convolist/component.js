@@ -17,7 +17,6 @@ class ConvoList extends Component{
   //process conversations for diplay
   listConvos(data){
     return data.map((convo,index)=>{
-
       return (
         <ListItem
           key={convo.id}

@@ -14,13 +14,12 @@ class ToTextField extends Component{
     }
   }
   render(){
-    console.log('recip length',this.props.recipients)
     return(
       <div className='messageToTextFieldContainer'>
         <div className='toTextFieldLabel'>To:</div>
-        <div className='toTextFieldContactToken'>
+        <div className='toTextFieldContainer'>
           {
-            this.props.recipients.map(person=>(
+            (Object.values(this.props.recipients)).map(person=>(
               <ContactToken
                 email={person.email}
                 id={person.id}
@@ -31,22 +30,32 @@ class ToTextField extends Component{
               />
             ))
           }
-        </div>
-        <input
-          type="text"
-          placeholder={
-            this.props.recipients.length === 0 ?
-            "Type the email of a user and press enter."
-            :
-            ""
-          }
-          onKeyUp={(e)=>{
-            if(e.keyCode === 13){
-              this.props.setRecipient(e.target.value);
-              e.target.blur();
+          <input
+            type="text"
+            placeholder={
+              (Object.keys(this.props.recipients)).length === 0 ?
+              "Type the email of a user and press enter."
+              :
+              ""
             }
-          }}
-          ></input>
+            onKeyDown={(e)=>{
+              //using on keydown so that the delete command doesn't launch when there's still a value
+              if(e.keyCode === 13){
+                this.props.setRecipient(e.target.value,e.target);
+              }
+
+              if(e.keyCode == 8 && e.target.value===''){
+                //only remove last when there's a contact in the field
+                let keys = Object.keys(this.props.recipients);
+                if(keys.length>0){
+                  this.props.clearContactToken(keys[keys.length-1]);
+                }
+
+
+              }
+            }}
+            ></input>
+        </div>
       </div>
     )
   }

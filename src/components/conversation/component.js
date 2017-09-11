@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 /*Components*/
 import Message from './Message/component.js';
-
 /*Styling*/
 import './styling.css';
 
@@ -11,6 +10,10 @@ import './styling.css';
 
 
 class Conversation extends Component{
+  constructor(props){
+    super(props);
+
+  }
   messages(msg){
 
     return msg.map(message=>{
@@ -28,6 +31,7 @@ class Conversation extends Component{
     });
   }
 
+
   componentDidMount(){
     // msgs = this.messages(messages);
     // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
@@ -44,6 +48,7 @@ class Conversation extends Component{
         <div id='convo' className='convoBody'>
           {this.messages(this.props.conversation.messages)}
         </div>
+        
       </div>
     )
   }

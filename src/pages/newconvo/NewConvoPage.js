@@ -1,7 +1,7 @@
 /*Dependencies*/
 import React, {Component} from 'react';
 import { withApollo, graphql, gql } from 'react-apollo';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 
 /*Components*/
 import NewConvoHead from '../../components/header/NewConvoHead/ConvoHead.js';
@@ -10,7 +10,7 @@ import Conversation from '../../components/conversation/component.js';
 import TextField from '../../components/conversation/TextField/component.js';
 import ConvoHead from '../../components/header/ConvoHead/ConvoHead.js';
 import ContactToken from '../../components/conversation/NewConvo/ContactToken/ContactTokenComponent.js';
-
+import ToastNotification from '../../components/ToastNotification/ToastNotificationComponent.js';
 
 /*Styling*/
 import './styling.css';
@@ -19,51 +19,147 @@ class NewConvo extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      recipients:[]
+      recipients:{},
+      notificationMessage:'',
+      notificationVisible:false,
+      newConvoID:'',
+      redirect:false
     };
     this.sendNewConvo=this.sendNewConvo.bind(this);
     this.setRecipient=this.setRecipient.bind(this);
     this.fetchToInputField = this.fetchToInputField.bind(this);
     this.clearContactToken = this.clearContactToken.bind(this);
+    this.showNotification = this.showNotification.bind(this);
   }
-  setRecipient(person){
+  showNotification(message){
+    this.setState({
+      notificationMessage:message,
+      notificationVisible:true
+    });
+    setTimeout(()=>{
+      this.setState({
+        notificationVisible:false
+      })
+    },5000)
+  }
+
+  setRecipient(person,element){
+    console.log(person,this.props.data.user.email);
     //code that sets the recipient for the convo
     this.props.getUserByEml.variables.email = person;
-    this.props.getUserByEml.refetch().then(res=>{
-      //let userCount = Object.keys(this.state.recipients).length;
-      let newPerson;
-      console.log(res);
-      console.log('prev state',this.state.recipients)
-      if(res.data.User){
+    let recipNumbers = Object.keys(this.state.recipients);
+    if(recipNumbers.length == 0 && person != this.props.data.user.email){
+      this.props.getUserByEml.refetch().then(res=>{
+        //let userCount = Object.keys(this.state.recipients).length;
+        let newPerson;
 
-        //if user found set user ID to be used
-        newPerson = {
-          ...res.data.User,
-          exists:true
+        if(res.data.User){
+
+          //if user found set user ID to be used
+          newPerson = {
+            ...res.data.User,
+            exists:true
+          }
+
+        }else{
+          //set data to visualize that no user is found
+          newPerson = {
+            email:person,
+            id: Date.now(),
+            exists:false
+          }
+
         }
+        let newState = this.state.recipients;
+        newState[newPerson.id]=newPerson
+        this.setState((prevState) => ({
+          recipients: newState
+        }))
+        //clear user input
 
-      }else{
-        //set data to visualize that no user is found
-        newPerson = {
-          email:person,
-          id: Date.now(),
-          exists:false
-        }
 
-      }
-      console.log(newPerson)
-      this.setState((prevState) => ({
-        recipients: [
-          ...prevState.recipients,
-          newPerson
-        ]
-      }))
+      })
+    }else if(recipNumbers.length > 0){
+      console.error(new Error('Error: Multi user chat not supported'));
+      this.showNotification('Only one recipient per conversation is supported.')
+    }else if(person === this.props.data.user.email){
+      console.error(new Error('Error: You cannot send a message to yourself.'))
+      this.showNotification('You cannot send a message to yourself.')
+    }
 
-    })
+    element.value='';
   }
+  //TO FINISH!!!!!!!!!!!!!!!!!!!!!
   sendNewConvo(msg){
     //code that sets the new msg for the convo and invokes send
-    console.log('new msg',msg)
+    let allValid = true;
+    let index = 0;
+    let vals = Object.values(this.state.recipients);
+    let recipients = [];
+    //check if a valid user is entered
+    while (index<vals.length && allValid == true){
+      let person = vals[index];
+      person.exists == false? allValid=false : allValid=true;
+      //ad ID to recipient array to be used in creating convo
+      recipients.push(person.id);
+      index++;
+    }
+
+    //Add user's ID to recipient list
+    recipients.push(this.props.data.user.id);
+
+
+    if(allValid){
+      //Create new conversation with entered contacts
+      this.props.createConvo({variables:{recipients:recipients}}).then(res=>{
+        let convoID = res.data.createConversation.id;
+        this.setState({
+          newConvoID:convoID
+        });
+        if(convoID){
+          //if convo is created correctly continue on
+          return this.props.createMsg(
+            {
+              variables:
+              {
+                text:msg,
+                userID:this.props.data.user.id,
+                convoID:convoID
+              }
+            }
+          );
+        }else{
+          //throw an error message
+          return new Error('Conversation could not be created, please try again');
+        }
+      }).then(res=>{
+        this.setState({
+          redirect:true
+        });
+      }).catch(error=>{
+        console.error(error);
+        this.showNotification(error.message);
+      });
+
+    }else{
+      //throw err notification if user is invalid
+    }
+
+
+    // if(people){
+    //   //throw notification if there's one or more person that doesn't exist
+    //   console.error('Warning: one or more contacts are invalid')
+    // }else{
+    //   //else create the convo
+    //   let recip = ['cj6i6kecf23990168efbkxvgo',...Object.keys(recip)];
+    //   console.log(recip);
+    //   // this.props.createConvo(
+    //   //   {variables:
+    //   //     {recipients:}
+    //   //   }
+    //   // ).then(data=>console.log('create convo result',data));
+    // }
+
   }
 
   fetchToInputField(){
@@ -71,26 +167,41 @@ class NewConvo extends Component{
   }
 
   clearContactToken(id){
-    console.log('test');
+    //removes contact from state
+    console.log('test',id);
+    let newState = this.state.recipients;
+    delete newState[id];
+    this.setState({
+      recipients:newState
+    })
   }
 
   render(){
-    return(
+    if(this.state.redirect == false){
+      return(
 
-      <div className='newConvoPageContainer'>
-        <NewConvoHead/>
-        <div className='newConvoPageBody'>
-          <ToTextField
-            recipients={this.state.recipients}
-            setRecipient={this.setRecipient}
-            clearContactToken = {this.clearContactToken}
-          />
-          <div className='newConvoMessageTextField'>
-            <TextField submit={this.sendNewConvo}/>
+        <div className='newConvoPageContainer'>
+          <NewConvoHead/>
+          <div className='newConvoPageBody'>
+            <ToTextField
+              recipients={this.state.recipients}
+              setRecipient={this.setRecipient}
+              clearContactToken = {this.clearContactToken}
+            />
+            <div className='newConvoMessageTextField'>
+              <TextField submit={this.sendNewConvo}/>
+            </div>
           </div>
+          {this.state.notificationVisible &&
+            <ToastNotification message={this.state.notificationMessage}/>
+          }
         </div>
-      </div>
-    )
+      )
+    }else{
+      return(
+        <Redirect push to={`/${this.props.data.user.id}/convo/${this.state.newConvoID}`}/>
+      )
+    }
   }
 }
 
@@ -142,6 +253,16 @@ const searchUsers = gql`
   }
   }
 `
+const userQuery = gql`
+  query {
+    user {
+      id
+      name
+      email
+      imageUrl
+    }
+  }
+`
 
 export default graphql(
   createMsg,{name:'createMsg'}
@@ -149,4 +270,5 @@ export default graphql(
 (graphql(
   createConvo,{name:'createConvo'})
 (graphql(getUserByEml,{name:'getUserByEml'})
-(withRouter(NewConvo))));
+(graphql(userQuery)
+  (withRouter(NewConvo)))));

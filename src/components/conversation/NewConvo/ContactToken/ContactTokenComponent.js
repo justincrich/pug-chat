@@ -15,7 +15,12 @@ function ContactToken(props){
     <div id={
       props.id
     }
-    className='contactTokenContainer'>
+    className={
+      props.exists?
+       'contactTokenContainer'
+       :
+       'contactTokenContainer ContactToken_ERROR'
+    }>
       {
         props.name ?
         props.name
