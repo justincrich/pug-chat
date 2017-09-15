@@ -12,7 +12,7 @@ import './styling.css';
 class Conversation extends Component{
   constructor(props){
     super(props);
-
+    this.scrollBottom = this.scrollBottom.bind(this);
   }
   messages(msg){
 
@@ -31,14 +31,21 @@ class Conversation extends Component{
     });
   }
 
+  scrollBottom(){
+    let objDiv = document.getElementById("convo");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
 
   componentDidMount(){
     // msgs = this.messages(messages);
     // const node = ReactDOM.findDOMNode(msgs[msgs.length-1]);
-    let objDiv = document.getElementById("convo");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    this.scrollBottom();
 
 
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    this.scrollBottom();
   }
 
   render(){
@@ -48,7 +55,7 @@ class Conversation extends Component{
         <div id='convo' className='convoBody'>
           {this.messages(this.props.conversation.messages)}
         </div>
-        
+
       </div>
     )
   }
