@@ -44,7 +44,7 @@ class NewConvo extends Component{
   }
 
   setRecipient(person,element){
-    console.log(person,this.props.data.user.email);
+    //(person,this.props.data.user.email);
     //code that sets the recipient for the convo
     this.props.getUserByEml.variables.email = person;
     let recipNumbers = Object.keys(this.state.recipients);
@@ -89,9 +89,9 @@ class NewConvo extends Component{
 
     element.value='';
   }
-  //TO FINISH!!!!!!!!!!!!!!!!!!!!!
+
   sendNewConvo(msg){
-    //code that sets the new msg for the convo and invokes send
+
     let allValid = true;
     let index = 0;
     let vals = Object.values(this.state.recipients);
@@ -109,7 +109,7 @@ class NewConvo extends Component{
     recipients.push(this.props.data.user.id);
 
 
-    if(allValid){
+    if(allValid && msg!=''){
       //Create new conversation with entered contacts
       this.props.createConvo({variables:{recipients:recipients}}).then(res=>{
         let convoID = res.data.createConversation.id;
@@ -141,24 +141,16 @@ class NewConvo extends Component{
         this.showNotification(error.message);
       });
 
-    }else{
+    }else if(msg === ''){
+      //throw error if message is blank
+      console.error(new Error('Message cannot be empty'));
+      this.showNotification('Message cannot be empty');
+    }else if(!allValid){
       //throw err notification if user is invalid
+      console.error(new Error('Invalid recipient(s), must be a registered user with PugChat'));
+      this.showNotification('Invalid recipient, user must be registered with PugChat');
     }
 
-
-    // if(people){
-    //   //throw notification if there's one or more person that doesn't exist
-    //   console.error('Warning: one or more contacts are invalid')
-    // }else{
-    //   //else create the convo
-    //   let recip = ['cj6i6kecf23990168efbkxvgo',...Object.keys(recip)];
-    //   console.log(recip);
-    //   // this.props.createConvo(
-    //   //   {variables:
-    //   //     {recipients:}
-    //   //   }
-    //   // ).then(data=>console.log('create convo result',data));
-    // }
 
   }
 
@@ -168,7 +160,7 @@ class NewConvo extends Component{
 
   clearContactToken(id){
     //removes contact from state
-    console.log('test',id);
+    //('test',id);
     let newState = this.state.recipients;
     delete newState[id];
     this.setState({

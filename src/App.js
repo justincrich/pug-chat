@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   selectConvo(){
-    console.log('select convo')
+
   }
 
   setRightPannel(){
@@ -145,7 +145,7 @@ class App extends Component {
   }
 
   getUI(width){
-    console.log(width);
+    //(width);
     //
   }
 
@@ -185,7 +185,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.data.user)
+    //(this.props.data.user)
     if(this.props.data.loading){
       //DISPLAY LOADING STATE
       return (<div>Loading</div>)

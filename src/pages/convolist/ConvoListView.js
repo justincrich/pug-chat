@@ -1,6 +1,6 @@
 /*Dependencies*/
 import React, {Component} from 'react';
-import { graphql, gql, compose } from 'react-apollo'
+import { graphql, gql, compose, withApollo } from 'react-apollo'
 //import gql from 'graphql-tag'
 import { withRouter, Redirect } from 'react-router'
 import {convoCleaner} from '../../components/tools/cleaner.js';
@@ -20,12 +20,72 @@ class ConvoListView extends Component{
     }).isRequired
     // router: React.PropTypes.object.isRequired,
   }
+
   constructor(props){
     super(props);
     this.state={
       headerType:'convoList'
     }
     this.deleteConvo = this.deleteConvo.bind(this);
+    this.subscribeToNewConversations = this.subscribeToNewConversations.bind(this);
+
+  }
+
+
+
+
+
+  componentWillReceiveProps(newProps) {
+    if (!newProps.data.loading) {
+      if (this.unsubscribe) {
+        if (newProps.data.feed !== this.props.data.feed) {
+          // if the feed has changed, we need to unsubscribe before resubscribing
+          this.unsubscribe();
+        } else {
+          // we already have an active subscription with the right params
+          return;
+        }
+      }
+
+      this.unsubscribe = newProps.data.subscribeToMore({
+        document:   gql`
+            subscription($userID:ID!){
+                      Message(filter:{
+                        mutation_in:[CREATED]
+                      }){
+                        node{
+                          conversation{
+                            id
+                            users(filter:{
+                              id_not:$userID
+                            }){
+                              id
+                              name
+                              imageUrl
+                            }
+                            messages(last:1){
+                              text
+                              createdAt
+                              id
+                            }
+                          }
+                        }
+                      }
+
+            }
+            `,
+        variables: {userID:this.props.userID},
+        // this is where the magic happens.
+        updateQuery: (previousResult, { subscriptionData }) => {
+          //('UPDATEEE ',subscriptionData,previousResult);
+
+          this.props.data.refetch();
+
+          return previousResult;
+        },
+        onError: (err) => console.error(err),
+      });
+    }
   }
 
   findUser(term){
@@ -49,6 +109,7 @@ class ConvoListView extends Component{
 
 
   render(){
+    //(this.props)
     if(this.props.data.loading){
       return(<div></div>)
     }else{
@@ -65,7 +126,33 @@ class ConvoListView extends Component{
       )
     }
   }
+
+
+
+  subscribeToNewConversations (){
+    this.props.getConvos.subscribeToMore({
+      document:gql`
+          subscription{
+            Conversation(filter:{
+              mutation_in:[CREATED]
+            }){
+              node{
+                id
+
+              }
+            }
+          }
+        `
+      ,
+      updateQuery:(previousState,{subscriptionData})=>{
+        //('data subscription',subscriptionData)
+      }
+    })
+  }
+
 }
+
+
 
 const getConvos = gql`
   query ($userID:ID!){
@@ -118,6 +205,10 @@ const deleteConversation= gql`
   }
 `;
 
+// const convoSubscription = gql`
+//
+// `;
+
 
 
 export default graphql(deleteConversation,{name:'deleteConversation'})
@@ -127,9 +218,9 @@ export default graphql(deleteConversation,{name:'deleteConversation'})
   options: { variables: { conversation: '' } },
 })
   (graphql(getConvos,{
-  options:(props)=>({
-    variables:{
-      userID:props.userID
+    options:(props)=>({
+      variables:{
+        userID:props.userID
     }
   })})
-  (withRouter(ConvoListView)))));
+  (withApollo(withRouter(ConvoListView))))));
