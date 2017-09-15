@@ -15,6 +15,7 @@ class TextField extends Component{
     return(
       <div className='messageTextFieldContainer'>
         <input
+          id='messageTextField'
           type="text"
           placeholder="Type a message..."
           onChange={(e)=>{
@@ -27,6 +28,7 @@ class TextField extends Component{
           onKeyUp={(e)=>{
             if(e.keyCode === 13){
               this.props.submit(e.target.value);
+              document.getElementById('messageTextField').value = '';
               e.target.blur();
             }
           }}
@@ -34,7 +36,10 @@ class TextField extends Component{
         <a
           className="messageTextFieldSubmit"
           href="#"
-          onClick={()=>this.props.submit(this.state.message)}
+          onClick={()=>{
+            this.props.submit(this.state.message);
+            document.getElementById('messageTextField').value = '';
+          }}
           >
           Submit
         </a>
