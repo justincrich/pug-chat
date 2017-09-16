@@ -11,7 +11,7 @@ import { withRouter } from 'react-router';
 
 /*Pages*/
 import ConvoListViewWrapper from './pages/convolist/ConvoListView.js';
-import ConversationView from './pages/conversation/page.js';
+import ConversationViewWrapper from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
 import NewConvoPageWrapper from './pages/newconvo/NewConvoPage.js'
@@ -85,17 +85,17 @@ class App extends Component {
           <Redirect to={`/${this.props.data.user.id}/newconvo`}/>
         } */}
         <Route name='conversation' path={"/newconvo"} component={NewConvoPageWrapper}/>
-        <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+        <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationViewWrapper}/>
       </div>
     )
     // if(this.state.newConvo){
     //   return(
-    //     <Route name='conversation' path={"/:userId/newconvo"} component={ConversationView}/>
-    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+    //     <Route name='conversation' path={"/:userId/newconvo"} component={ConversationViewWrapper}/>
+    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationViewWrapper}/>
     //   )
     // }else{
     //   return(
-    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
+    //     <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationViewWrapper}/>
     //   )
     // }
   }

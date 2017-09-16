@@ -20,7 +20,7 @@ import { createMsg } from '../../GQL/mutations.js';
 import { newMsgSubscription } from '../../GQL/subscriptions.js';
 
 
-class ConversationView extends Component{
+export class ConversationView extends Component{
   static propTypes = {
     data: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired,
@@ -115,7 +115,7 @@ class ConversationView extends Component{
 }
 
 // export default ConversationView;
-export default withApollo(
+const ConversationViewWrapper = withApollo(
   graphql(createMsg,{
     name:"createMsg",
     options:{
@@ -131,3 +131,5 @@ export default withApollo(
     }
   })
 })(withRouter(ConversationView))));
+
+export default ConversationViewWrapper;
