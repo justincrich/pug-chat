@@ -10,11 +10,11 @@ import { withApollo, graphql, gql } from 'react-apollo';
 import { withRouter } from 'react-router';
 
 /*Pages*/
-import ConvoListViewWithData from './pages/convolist/ConvoListView.js';
+import ConvoListViewWrapper from './pages/convolist/ConvoListView.js';
 import ConversationView from './pages/conversation/page.js';
 import LoginView from './pages/login/page.js';
 import SignupView from './pages/signup/page.js';
-import NewConvo from './pages/newconvo/NewConvoPage.js'
+import NewConvoPageWrapper from './pages/newconvo/NewConvoPage.js'
 
 
 
@@ -84,7 +84,7 @@ class App extends Component {
           this.state.newConvo &&
           <Redirect to={`/${this.props.data.user.id}/newconvo`}/>
         } */}
-        <Route name='conversation' path={"/newconvo"} component={NewConvo}/>
+        <Route name='conversation' path={"/newconvo"} component={NewConvoPageWrapper}/>
         <Route name='conversation' path={"/:userId/convo/:convoId"} component={ConversationView}/>
       </div>
     )
@@ -109,7 +109,7 @@ class App extends Component {
       //select convo or list view
       if(this.props.location.pathname === '/'){
         return(
-          <ConvoListViewWithData
+          <ConvoListViewWrapper
             userID={this.props.data.user.id}
             logout={this._logout}
             newConvo={this.displayNewConvo}
@@ -126,7 +126,7 @@ class App extends Component {
       //Tablet view
       return(
         <div className='appContainer'>
-          <ConvoListViewWithData
+          <ConvoListViewWrapper
             userID={this.props.data.user.id}
             logout={this._logout}
             newConvo={this.displayNewConvo}

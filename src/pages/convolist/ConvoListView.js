@@ -9,11 +9,20 @@ import {convoCleaner} from '../../components/tools/cleaner.js';
 import ListHead from '../../components/header/ListHead/ListHead.js';
 import ConvoList from '../../components/convolist/component.js';
 
+/*Queries*/
+import { getConvos, getAllConvoMsgs } from '../../GQL/queries.js';
+
+/*Mutation*/
+import { deleteConversation, deleteMessage } from '../../GQL/mutations.js';
+
+/*SUBSCRIPTIONS*/
+import { newMessageSubscriptions } from '../../GQL/subscriptions.js';
+
 //styling
 import './styling.css';
 
 
-class ConvoListView extends Component{
+export class ConvoListView extends Component{
   static propTypes = {
     data: React.PropTypes.shape({
       user: React.PropTypes.object,
@@ -27,7 +36,6 @@ class ConvoListView extends Component{
       headerType:'convoList'
     }
     this.deleteConvo = this.deleteConvo.bind(this);
-    this.subscribeToNewConversations = this.subscribeToNewConversations.bind(this);
 
   }
 
@@ -48,32 +56,7 @@ class ConvoListView extends Component{
       }
 
       this.unsubscribe = newProps.data.subscribeToMore({
-        document:   gql`
-            subscription($userID:ID!){
-                      Message(filter:{
-                        mutation_in:[CREATED]
-                      }){
-                        node{
-                          conversation{
-                            id
-                            users(filter:{
-                              id_not:$userID
-                            }){
-                              id
-                              name
-                              imageUrl
-                            }
-                            messages(last:1){
-                              text
-                              createdAt
-                              id
-                            }
-                          }
-                        }
-                      }
-
-            }
-            `,
+        document: newMessageSubscriptions,
         variables: {userID:this.props.userID},
         // this is where the magic happens.
         updateQuery: (previousResult, { subscriptionData }) => {
@@ -129,89 +112,14 @@ class ConvoListView extends Component{
 
 
 
-  subscribeToNewConversations (){
-    this.props.getConvos.subscribeToMore({
-      document:gql`
-          subscription{
-            Conversation(filter:{
-              mutation_in:[CREATED]
-            }){
-              node{
-                id
 
-              }
-            }
-          }
-        `
-      ,
-      updateQuery:(previousState,{subscriptionData})=>{
-        //('data subscription',subscriptionData)
-      }
-    })
-  }
 
 }
 
 
 
-const getConvos = gql`
-  query ($userID:ID!){
-    user{
-      id
-      name
-      conversations{
-        id
-        users(filter:{
-          id_not:$userID
-        }){
-          id
-          name
-          imageUrl
-        }
-        messages(last:1){
-          text
-          createdAt
-          id
-        }
-      }
-    }
-  }
-`
 
-const getAllConvoMsgs = gql`
-  query ($conversation:ID!){
-    Conversation(id:$conversation){
-      id
-      messages{
-        id
-      }
-    }
-  }
-`
-
-const deleteMessage = gql`
-  mutation deleteMessage($message:ID!){
-    deleteMessage(id:$message){
-      id
-    }
-  }
-`;
-
-const deleteConversation= gql`
-  mutation deleteConversation($conversation:ID!){
-    deleteConversation(id:$conversation){
-      id
-    }
-  }
-`;
-
-// const convoSubscription = gql`
-//
-// `;
-
-
-
-export default graphql(deleteConversation,{name:'deleteConversation'})
+const ConvoListViewWrapper = graphql(deleteConversation,{name:'deleteConversation'})
 (graphql(deleteMessage,{name:'deleteMessage'})
 (graphql(getAllConvoMsgs,{
   name:'getAllConvoMsgs',
@@ -224,3 +132,5 @@ export default graphql(deleteConversation,{name:'deleteConversation'})
     }
   })})
   (withApollo(withRouter(ConvoListView))))));
+
+export default ConvoListViewWrapper;

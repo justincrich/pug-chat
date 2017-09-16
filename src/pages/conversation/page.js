@@ -10,77 +10,14 @@ import TextField from '../../components/conversation/TextField/component.js';
 import ConvoHead from '../../components/header/ConvoHead/ConvoHead.js';
 import ToastNotification from '../../components/ToastNotification/ToastNotificationComponent.js';
 
-/* GraphQL Operations */
-const getConversations = gql`
-  query getConversations($convoID:ID!){
-    Conversation(id:$convoID){
-      __typename
-      id
-      users{
-        name
-        id
-        imageUrl
-      }
-      messages{
-        id
-        createdAt
-        text
-        user{
-          id
-          name
-          imageUrl
-        }
-      }
-    }
-    user{
-      id
-    }
-  }
-`
+/*Queries*/
+import { getSingleConversation } from '../../GQL/queries.js';
 
-const createMsg = gql`
-mutation createMsg(
-  $text:String!,
-  $userID:ID!,
-  $convoID:ID!
-  ){
-    createMessage(
-      text:$text,
-      userId:$userID,
-      conversationId:$convoID){
-      id
-      text
-      createdAt
-      user{
-        name
-        imageUrl
-      }
-    }
-  }
-`
+/*Mutation*/
+import { createMsg } from '../../GQL/mutations.js';
 
-const newMsgSubscription = gql`
-  subscription newMsgSubscription($convoID:ID!){
-    Message(filter:{
-      mutation_in:[CREATED],
-      node:{
-        conversation:{
-          id:$convoID
-        }
-      }
-    }){
-      node{
-        id
-        text
-        user{
-          name
-          imageUrl
-          updatedAt
-        }
-      }
-    }
-  }
-`
+/*SUBSCRIPTIONS*/
+import { newMsgSubscription } from '../../GQL/subscriptions.js';
 
 
 class ConversationView extends Component{
@@ -126,9 +63,9 @@ class ConversationView extends Component{
   }
 
   componentWillReceiveProps(newProps) {
-    if (!newProps.getConversations.loading) {
+    if (!newProps.getSingleConversation.loading) {
       if (this.unsubscribe) {
-        if (newProps.getConversations.feed !== this.props.getConversations.feed) {
+        if (newProps.getSingleConversation.feed !== this.props.getSingleConversation.feed) {
           // if the feed has changed, we need to unsubscribe before resubscribing
           this.unsubscribe();
         } else {
@@ -137,13 +74,13 @@ class ConversationView extends Component{
         }
       }
 
-      this.unsubscribe = newProps.getConversations.subscribeToMore({
+      this.unsubscribe = newProps.getSingleConversation.subscribeToMore({
         document: newMsgSubscription,
         variables: {convoID:this.props.match.params.convoId},
         updateQuery: (previousResult, { subscriptionData }) => {
           //('UPDATEEE ',subscriptionData,previousResult);
 
-          this.props.getConversations.refetch();
+          this.props.getSingleConversation.refetch();
 
           return previousResult;
         },
@@ -154,18 +91,18 @@ class ConversationView extends Component{
 
   render(){
     console.log('new msg',this.props)
-    if(this.props.getConversations.loading){
+    if(this.props.getSingleConversation.loading){
         return(<div></div>)
-      }else if(this.props.getConversations.Conversation){
+      }else if(this.props.getSingleConversation.Conversation){
         return(
           <div className='convoPageContainer'>
             <ConvoHead users={
-              this.props.getConversations.Conversation.users.filter(user=>{
+              this.props.getSingleConversation.Conversation.users.filter(user=>{
 
-                return user.id != this.props.getConversations.user.id;
+                return user.id != this.props.getSingleConversation.user.id;
               })
             }/>
-            <Conversation userID = {this.props.match.params.userId} conversation = {this.props.getConversations.Conversation}/>
+            <Conversation userID = {this.props.match.params.userId} conversation = {this.props.getSingleConversation.Conversation}/>
             <TextField submit={this.createConvo}/>
             {this.state.notificationVisible &&
               <ToastNotification message={this.state.notificationMessage}/>
@@ -183,12 +120,12 @@ export default withApollo(
     name:"createMsg",
     options:{
       refetchQueries:[
-        "getConversations"
+        "getSingleConversation"
       ]
     }
   })
-(graphql(getConversations,{
-  name:"getConversations",
+(graphql(getSingleConversation,{
+  name:"getSingleConversation",
   options:(gqlProps)=>({variables:{
       convoID:gqlProps.match.params.convoId
     }

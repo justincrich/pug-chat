@@ -15,7 +15,16 @@ import ToastNotification from '../../components/ToastNotification/ToastNotificat
 /*Styling*/
 import './styling.css';
 
-class NewConvo extends Component{
+/*Queries*/
+import { userQuery, getUserByEml, searchUsers } from '../../GQL/queries.js';
+
+/*Mutation*/
+import { createMsg, createConvo } from '../../GQL/mutations.js';
+
+// /*SUBSCRIPTIONS*/
+// import {  } from '../../GQL/subscriptions.js';
+
+export class NewConvo extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -197,66 +206,7 @@ class NewConvo extends Component{
   }
 }
 
-//graphql(
-
-const createConvo = gql`
-  mutation createConvoMsg(
-  $recipients:[ID!]){
-  createConversation(usersIds:$recipients){
-    id
-    users{
-      name
-      email
-      imageUrl
-    }
-  }
-  }
-`
-
-const createMsg = gql`
-mutation createMsg(
-  $text:String!,
-  $userID:ID!,
-  $convoID:ID!
-  ){
-    createMessage(
-      text:$text,
-      userId:$userID,
-      conversationId:$convoID){
-      id
-    }
-  }
-`
-const getUserByEml = gql`
-  query getUser($email:String){
-    User(email:$email){
-      id
-      email
-      name
-    }
-  }
-`
-const searchUsers = gql`
-  query searchUsers($term:String){
-  allUsers(filter:{OR:[{email_contains:$term},{name_contains:$term}]}){
-    id
-    name
-    email
-  }
-  }
-`
-const userQuery = gql`
-  query {
-    user {
-      id
-      name
-      email
-      imageUrl
-    }
-  }
-`
-
-export default graphql(
+const NewConvoPageWrapper = graphql(
   createMsg,{name:'createMsg'}
 )
 (graphql(
@@ -264,3 +214,5 @@ export default graphql(
 (graphql(getUserByEml,{name:'getUserByEml'})
 (graphql(userQuery)
   (withRouter(NewConvo)))));
+
+export default NewConvoPageWrapper;
