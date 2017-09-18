@@ -49,17 +49,10 @@ export class ListItem extends Component{
               </div>
             </div>
             <div className='date'>
-              {/* {this.props.message?
-                  // console.log(this.props.message.createdAt)
 
-                :
-                  <div></div>
-              } */}
               {this.props.message && moment(this.props.message.createdAt).fromNow()}
             </div>
-            {/* <i className="deleteConvoInList fa fa-times"
-              aria-hidden="true"
-              onClick={()=>this.props.deleteConvo(this.props.convo)}></i> */}
+
         </li>
       </Link>
     )

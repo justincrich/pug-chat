@@ -1,5 +1,6 @@
 {
   "name": "pug-chat",
+  "homepage": "https://github.com/justincrich/pug-chat/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -31,6 +32,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "enzyme": "^2.9.1",
+    "gh-pages": "^1.0.0",
     "jest": "^21.1.0",
     "mocha": "^3.5.3",
     "react-addons-test-utils": "^15.6.0",
@@ -43,7 +45,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "mocha": "mocha --require mocha_runner.js ./src/**/*.test.js"
+    "mocha": "mocha --require mocha_runner.js ./src/**/*.test.js",
+    "deploy" : "npm run build&&gh-pages -d build"
   },
   "jest": {
     "verbose": true
