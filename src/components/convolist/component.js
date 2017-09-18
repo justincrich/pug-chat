@@ -6,7 +6,7 @@ import ListItem from './listitem/component.js';
 import "./styling.css";
 
 
-class ConvoList extends Component{
+export class ConvoList extends Component{
   constructor(props){
     super(props);
     this.state={

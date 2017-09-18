@@ -11,6 +11,7 @@
     "history": "^4.7.2",
     "immutability-helper": "^2.3.1",
     "md5": "^2.2.1",
+    "moment": "^2.18.1",
     "normalize.css": "^7.0.0",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
@@ -34,7 +35,8 @@
     "mocha": "^3.5.3",
     "react-addons-test-utils": "^15.6.0",
     "react-scripts": "1.0.10",
-    "react-test-renderer": "^15.6.1"
+    "react-test-renderer": "^15.6.1",
+    "sinon": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,5 +44,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "mocha": "mocha --require mocha_runner.js ./src/**/*.test.js"
+  },
+  "jest": {
+    "verbose": true
   }
 }

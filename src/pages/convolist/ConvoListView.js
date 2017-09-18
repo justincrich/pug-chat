@@ -92,7 +92,6 @@ export class ConvoListView extends Component{
 
 
   render(){
-    //(this.props)
     if(this.props.data.loading){
       return(<div></div>)
     }else{

@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import { Link, Route } from 'react-router-dom';
 import Conversation from '../../conversation/component.js';
+import moment from 'moment';
 
 //styling
 import './styling.css';
@@ -14,7 +15,7 @@ import './styling.css';
 //   id:1
 // };
 
-class ListItem extends Component{
+export class ListItem extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -24,6 +25,7 @@ class ListItem extends Component{
 
 
   render(){
+
     return(
       <Link to={'/'+this.props.userID+'/convo/' + this.props.convo.id+'/'}
       >
@@ -47,11 +49,13 @@ class ListItem extends Component{
               </div>
             </div>
             <div className='date'>
-              {this.props.message?
-                  this.props.message.createdAt
+              {/* {this.props.message?
+                  // console.log(this.props.message.createdAt)
+
                 :
                   <div></div>
-              }
+              } */}
+              {this.props.message && moment(this.props.message.createdAt).fromNow()}
             </div>
             {/* <i className="deleteConvoInList fa fa-times"
               aria-hidden="true"
