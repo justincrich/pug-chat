@@ -1,9 +1,78 @@
+## Project Overview
+
+This project is a chat application patterned after Facebook Messenger built with React.js and GraphQL.
+
+# Technologies Used
+
+* [ApolloData](http://dev.apollodata.com/): Library that manages calls to a GraphQL server as a higher order component.
+* [GraphCool](https://www.graph.cool/): Javascript framework that enables the development of single page applications by modularizing UI components.
+* [React](https://facebook.github.io/react/): Javascript framework that enables the development of single page applications by modularizing UI components.
+* [ReactRouter](https://reacttraining.com/react-router/): Library that helps manage page routing within React applications.
+
+# Getting Started
+
+## 1. Clone repository
+
+```sh
+git clone https://github.com/justincrich/pug-chat
+cd ./pug-chat
+```
+
+## 2. Setup Graph.Cool project
+
+First you will need to setup a Graph.Cool account at http://graph.cool (this is free).
+
+Second download the GraphCool client:
+```sh
+  npm install -g graphcool
+```
+
+Next you need to clone this graphcool project
+```sh
+  graphcool init --copy cj64bcbxh8vda0153u98etj4i
+```
+
+Take note of the **simple/relay** API addresses for the project
+
+## 3. Setup backend
+Open /pug-chat/src/index.js
+
+Now you will need to replace my default simple/relay API addresses with your own. Look for this block of code:
+
+```sh
+//setup authentication and network interface
+const networkInterface = createNetworkInterface({
+  uri:'https://YOUR_GRAPH.COOL_SIMPLE_API',
+
+});
+
+// Create WebSocket client
+const wsClient = new SubscriptionClient(`wss://YOUR GRAPH.COOL_relay_API`, {
+  reconnect: true,
+  timeout: 20000,
+  connectionParams:{
+    Authorization: `Bearer ${localStorage.getItem('graphcoolToken')}`
+  }
+});
+
+```
+
+## 4. Install dependencies & run locally
+
+You're finished configuring the application, you're ready to run it:
+
+```sh
+npm install
+npm start # open browser with: http://localhost:3000
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-## Table of Contents
+## Background On Dependencies
 
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
@@ -1760,7 +1829,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
