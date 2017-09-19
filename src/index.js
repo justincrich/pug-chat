@@ -26,9 +26,7 @@ import SignupView from './pages/signup/page.js';
 //setup authentication and network interface
 const networkInterface = createNetworkInterface({
   uri:'https://api.graph.cool/simple/v1/cj64bcbxh8vda0153u98etj4i',
-  // opts:{
-  //   credentials: 'include'
-  // }
+
 });
 
 // Create WebSocket client
