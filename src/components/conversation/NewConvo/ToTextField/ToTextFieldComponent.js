@@ -8,11 +8,15 @@ import ContactToken from "../ContactToken/ContactTokenComponent.js"
 import "./styling.css";
 
 class ToTextField extends Component{
+  constructor(props){
+    super(props);
+  }
   componentWillReceiveProps(nextProps){
     if(nextProps.recipients.length>0){
       //create tokens for each name in list
     }
   }
+
   render(){
     return(
       <div className='messageToTextFieldContainer'>

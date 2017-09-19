@@ -118,7 +118,7 @@ export class NewConvo extends Component{
     recipients.push(this.props.data.user.id);
 
 
-    if(allValid && msg!=''){
+    if(allValid && msg!='' && (vals.length>0)){
       //Create new conversation with entered contacts
       this.props.createConvo({variables:{recipients:recipients}}).then(res=>{
         let convoID = res.data.createConversation.id;
@@ -158,6 +158,10 @@ export class NewConvo extends Component{
       //throw err notification if user is invalid
       console.error(new Error('Invalid recipient(s), must be a registered user with PugChat'));
       this.showNotification('Invalid recipient, user must be registered with PugChat');
+    }else if(vals.length == 0){
+      //throw error if there's no contacts entered
+      console.error(new Error('No recipients specified, please provide a valid user email'));
+      this.showNotification('No recipients specified, please provide a valid user email');
     }
 
 
