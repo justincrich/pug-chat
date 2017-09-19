@@ -1,6 +1,5 @@
 {
   "name": "pug-chat",
-  "homepage": "https://justincrich.github.io/pug-chat/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
