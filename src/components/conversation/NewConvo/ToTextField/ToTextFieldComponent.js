@@ -55,7 +55,6 @@ class ToTextField extends Component{
                   this.props.clearContactToken(keys[keys.length-1]);
                 }
 
-
               }
             }}
             ></input>

@@ -16,18 +16,28 @@ export class ConvoList extends Component{
   }
   //process conversations for diplay
   listConvos(data){
-    return data.map((convo,index)=>{
-      return (
-        <ListItem
-          key={convo.id}
-          message={convo.messages[0]}
-          users={convo.users}
-          convo={convo}
-          userID={this.props.userID}
-          deleteConvo={this.props.deleteConvo}
-          />
-      );
+    let resObj = data.slice();
+    //sorting the results so the convo w the newest msg shows first
+    resObj.sort((a,b)=>{
+      let dateA = new Date(a.messages[0].createdAt);
+      let dateB = new Date(b.messages[0].createdAt);
+      let resTime = +dateA>+dateB ? -1 : 1;
+      return resTime;
+
     });
+    return resObj.map((convo,index)=>{
+        return (
+          <ListItem
+            key={convo.id}
+            message={convo.messages[0]}
+            users={convo.users}
+            convo={convo}
+            userID={this.props.userID}
+            deleteConvo={this.props.deleteConvo}
+            />
+        )
+    })
+
   }
 
   //update list of convos whenever we get a new list in props

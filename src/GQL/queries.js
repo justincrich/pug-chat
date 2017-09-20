@@ -16,7 +16,7 @@ export const getConvos = gql`
     user{
       id
       name
-      conversations{
+      conversations(orderBy:updatedAt_DESC){
         id
         users(filter:{
           id_not:$userID
