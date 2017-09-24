@@ -11,6 +11,10 @@
   padding-bottom: 0px !important;
 }
 
+.listNav i:hover{
+  color:rgba(230, 230, 230, .9);
+}
+
 .listNav a{
   color: #FFF;
 }
@@ -25,7 +29,7 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding:0 10px;
+  padding:0 15px;
 
 }
 @media screen and (min-width: 768px) {
@@ -84,4 +88,8 @@
 .navBarSearchContainer i{
   cursor: pointer;
   margin-left: 10px;
+}
+
+.chatSettingsIcon{
+  cursor: pointer;
 }

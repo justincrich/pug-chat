@@ -36,9 +36,12 @@ export class ConvoListView extends Component{
       headerType:'convoList'
     }
     this.deleteConvo = this.deleteConvo.bind(this);
-
+    this.logout.bind(this);
   }
-
+  logout = () =>{
+    window.localStorage.removeItem('graphcoolToken');
+    window.location.reload();
+  }
 
 
 
@@ -98,7 +101,7 @@ export class ConvoListView extends Component{
 
       return (
         <div className='convoListContainerHolder'>
-          <ListHead newConvo = {this.props.newConvo}/>
+          <ListHead newConvo = {this.props.newConvo} logout = {this.logout}/>
           <ConvoList
             conversations={this.props.data.user.conversations}
             userID={this.props.userID}

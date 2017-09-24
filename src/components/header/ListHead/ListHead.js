@@ -6,10 +6,10 @@ import {
   FormControl
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
-
+import Popover from '../../popover/popoverComponent.js';
 //styling
 import './styling.css';
-
+var popoverEvent;
 
 class ListHead extends Component{
   constructor(props){
@@ -20,19 +20,30 @@ class ListHead extends Component{
       settings:'icon',
       newMsg:'icon',
       newMsgField:'none',
+      popoverOpen:false
     }
+    this.togglePopover = this.togglePopover.bind(this);
 
+  }
 
+  togglePopover(){
+    this.setState(prevState => ({
+      popoverOpen: !prevState.popoverOpen
+    }));
+  }
+
+  componentWillMount(){
+    console.log('hiii')
   }
 
   render(){
     return(
       <nav className="listNav">
         <div className='menuSelectionHolderBox'>
-            {/* <div className='navSearch input-group'>
-              <i className="inputLabel fa fa-search input-group-addon" aria-hidden="true"></i>
-              <input id="navSearch" className="form-control mr-sm-2" type="text"/>
-            </div> */}
+          <i className="fa-2x fa fa-cog chatSettingsIcon"
+            aria-hidden="true"
+            onClick={this.togglePopover}
+            ></i>
             <Link to={"/newconvo"}>
               <i className="fa-2x fa fa-pencil-square-o newConvo"
                 aria-hidden="true"
@@ -40,6 +51,9 @@ class ListHead extends Component{
                 ></i>
             </Link>
         </div>
+        {this.state.popoverOpen &&
+          <Popover closePopover={this.togglePopover} logout= {this.props.logout}/>
+        }
       </nav>
 
     )
