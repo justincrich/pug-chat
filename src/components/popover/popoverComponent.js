@@ -23,7 +23,10 @@ export default class Popover extends Component{
     // e.target is the element which was clicked upon.
     // check whether the element clicked upon is in your component - if not,
     // then call the close logic
-    if(!ReactDOM.findDOMNode(this).contains(e.target)) {
+    if(!ReactDOM.findDOMNode(this).contains(e.target)
+      &&
+      e.target != document.getElementById('cogButton')
+      ) {
       // the click was outside your component, so handle closing here
       this.props.closePopover();
     }
@@ -31,7 +34,7 @@ export default class Popover extends Component{
 
   render(){
     return(
-      <div id="settingsPopover" className="popover" role="tooltip">
+      <div key={1} id="settingsPopover" className="popover" role="tooltip">
         <div className="popover-arrow">
         </div>
         <div className="popover-arrow-inner">

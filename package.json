@@ -45,7 +45,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "mocha": "mocha --require mocha_runner.js ./src/**/*.test.js",
-    "deploy" : "npm run build&&gh-pages -d build"
+    "deploy": "npm run build&&gh-pages -d build"
   },
   "jest": {
     "verbose": true

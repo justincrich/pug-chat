@@ -93,3 +93,21 @@
 .chatSettingsIcon{
   cursor: pointer;
 }
+
+.settingsPopoverTransition-enter {
+  opacity: 0.01;
+}
+
+.settingsPopoverTransition-enter.settingsPopoverTransition-enter-active {
+  opacity: 1;
+  transition: all 100ms ease-in;
+}
+
+.settingsPopoverTransition-leave {
+  opacity: 1;
+}
+
+.settingsPopoverTransition-leave.settingsPopoverTransition-leave-active {
+  opacity: 0.01;
+  transition: all 100ms ease-in;
+}

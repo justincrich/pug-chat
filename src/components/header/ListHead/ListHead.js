@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormControl
 } from 'react-bootstrap';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Link } from 'react-router-dom'
 import Popover from '../../popover/popoverComponent.js';
 //styling
@@ -40,7 +41,7 @@ class ListHead extends Component{
     return(
       <nav className="listNav">
         <div className='menuSelectionHolderBox'>
-          <i className="fa-2x fa fa-cog chatSettingsIcon"
+          <i id="cogButton" className="fa-2x fa fa-cog chatSettingsIcon"
             aria-hidden="true"
             onClick={this.togglePopover}
             ></i>
@@ -51,9 +52,15 @@ class ListHead extends Component{
                 ></i>
             </Link>
         </div>
-        {this.state.popoverOpen &&
-          <Popover closePopover={this.togglePopover} logout= {this.props.logout}/>
-        }
+        <ReactCSSTransitionGroup
+          transitionName="settingsPopoverTransition"
+          transitionEnterTimeout={100}
+          transitionLeaveTimeout={100}
+          >
+          {this.state.popoverOpen &&
+            <Popover closePopover={this.togglePopover} logout= {this.props.logout}/>
+          }
+        </ReactCSSTransitionGroup>
       </nav>
 
     )

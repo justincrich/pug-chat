@@ -33,6 +33,14 @@
   z-index: 1000;
 }
 
+.popoverHidden{
+  opacity: 0;
+}
+
+.popoverVisible{
+  opacity:1;
+}
+
 .popover-content{
   display: fixed;
   align-items: center;
