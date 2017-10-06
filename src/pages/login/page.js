@@ -35,7 +35,7 @@ class LoginView extends Component{
         <div className="card welcomeCard">
           <div className="card-block">
           <h2>Pug Chat</h2>
-          <p>Welcome to Pug Chat, a chat app for pug lovers. Please register or sign in to continue.</p>
+          <p>Welcome to Pug Chat, a chat app for pug lovers. Please register or  login to continue.</p>
           <div className="welcomeCardButtonContainer d-flex flex-row justify-content-end">
           <button type="button" 
                   className="btn btn-secondary"
