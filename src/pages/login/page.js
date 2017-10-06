@@ -17,37 +17,75 @@ class LoginView extends Component{
       login:true,
       email:'',
       password:'',
-      error:null
+      error:null,
+      screen:'welcome'
     };
     this._signup.bind(this);
     this.uploadImg.bind(this);
+    this._welcome.bind(this);
+    this.signupUI.bind(this);
   }
   static propTypes = {
     data: React.PropTypes.object.isRequired,
   }
-  signupUI = () =>{
-    return (
-      <div>
-        <div className='pageBody'>
-          <Signup signup={this._signup} showLogin={this._toggleSignupLogin} error={this.state.error}/>
+
+  _welcome= ()=>{
+    return(
+      <div className='body'>
+        <div className="card welcomeCard">
+          <div className="card-block">
+          <h2>Pug Chat</h2>
+          <p>Welcome to Pug Chat, a chat app for pug lovers. Please register or sign in to continue.</p>
+          <div className="welcomeCardButtonContainer d-flex flex-row justify-content-end">
+          <button type="button" 
+                  className="btn btn-secondary"
+                  onClick={()=>{
+                      this.setState({
+                        screen:'login'
+                      })
+                    }}
+          >Login</button>
+          <button type="button" 
+                    className="btn btn-secondary bg-primary text-white ml-2"
+                    onClick={()=>{
+                      this.setState({
+                        screen:'signup'
+                      })
+                    }}
+          >Sign Up</button>
+            
+          </div>
+          </div>
         </div>
       </div>
     )
   }
-  _toggleSignupLogin = () => {
+  signupUI = () =>{
+    console.log('in signup UI')
+    return (
+      <div>
+        <div className='pageBody'>
+          <Signup signup={this._signup} showLogin={this._toggleScreen} error={this.state.error}/>
+        </div>
+      </div>
+    )
+  }
+  _toggleScreen = (screen) => {
     this.setState({
-      login:!this.state.login
+      screen:screen
     });
   }
 
   loginUI = () =>{
     return (
-      <div className='pageBody'>
-        <Login
-          login={this._login}
-          showSignup={this._toggleSignupLogin}
-          error={this.state.error}
-        />
+      <div>
+          <div className='pageBody'>
+          <Login
+            login={this._login}
+            showSignup={this._toggleScreen}
+            error={this.state.error}
+          />
+        </div>
       </div>
     )
   }
@@ -143,17 +181,27 @@ class LoginView extends Component{
 
 
   render(){
-    return(
-      <div>
-        {this.state.login?
-          this.loginUI()
-          :
-          this.signupUI()
-        }
-      </div>
-    )
+    switch(this.state.screen){
+      case 'welcome':
+        return this._welcome();
+        break;
+      case 'login':
+        return this.loginUI();
+        break;
+      case 'signup':
+        return this.signupUI();
+        break;
+      default:
+        console.error('Error: something went wrong rendering the login screen.');
+    }
   }
 }
+
+// {this.state.login?
+//   this.loginUI()
+//   :
+//   this.signupUI()
+// }
 
 const createUser = gql`
   mutation ($name: String!, $email: String!, $password: String!) {

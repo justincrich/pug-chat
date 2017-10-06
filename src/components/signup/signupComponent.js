@@ -183,8 +183,8 @@ class Signup extends Component{
             </div>
           </div>
           <div className='signupCardFooter'>
-            <button type="button" className="btn btn-secondary" onClick={this.props.showLogin}>Login</button>
-            <button type="button" className="btn btn-primary" onClick={()=>this.exeSignup()}>Signup</button>
+            <button type="button" className="btn btn-secondary" onClick={()=>this.props.showLogin('login')}>Login</button>
+            <button type="button" className="btn btn-primary" onClick={()=>this.exeSignup()}>Sign Up</button>
           </div>
         </div>
       </div>
