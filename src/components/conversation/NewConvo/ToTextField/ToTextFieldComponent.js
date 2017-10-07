@@ -44,7 +44,7 @@ class ToTextField extends Component{
             }
             onKeyDown={(e)=>{
               //using on keydown so that the delete command doesn't launch when there's still a value
-              if(e.keyCode === 13){
+              if(e.keyCode == 13 || e.keyCode== 9 || e.keyCode==32){
                 this.props.setRecipient(e.target.value,e.target);
               }
 

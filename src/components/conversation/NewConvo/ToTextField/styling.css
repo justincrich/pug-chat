@@ -28,7 +28,7 @@
 }
 .messageToTextFieldContainer input{
   margin-left: 6px;
-  width:300px;
+  flex:2;
   height: 18px;
   font-size: .875em;
   line-height: 1.28em;
